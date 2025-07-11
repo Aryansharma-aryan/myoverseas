@@ -13,7 +13,7 @@ const app = express();
 // ✅ Corrected allowed origins (no trailing slash)
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://myoverseas.vercel.app"
+  "https://www.vertexstudyvisa.com"
 ];
 
 app.use(cors({
