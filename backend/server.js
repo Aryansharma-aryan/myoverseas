@@ -10,20 +10,19 @@ connectDB();
 
 const app = express();
 
-// ✅ Allow multiple origins (local + vercel)
+// ✅ Corrected allowed origins (no trailing slash)
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://myoverseas.vercel.app/"
+  "https://myoverseas.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow no-origin requests like Postman
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // Allow requests like Postman
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS: " + origin));
     }
   },
   credentials: true
