@@ -37,7 +37,7 @@ const Contact = () => {
     setSubmitted(false);
 
     try {
-      await axios.post("https://mine-vertex.onrender.com/api/consultants", formData);
+      await axios.post("https://myoverseas.onrender.com/api/consultants", formData);
       setSubmitted(true);
       setFormData({
         name: "",

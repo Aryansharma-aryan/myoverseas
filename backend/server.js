@@ -13,8 +13,7 @@ const app = express();
 // ✅ Allow multiple origins (local + vercel)
 const allowedOrigins = [
   "http://localhost:3000",
-  "FRONTEND_URL=https://myoverseas.vercel.app/
-"
+  "https://myoverseas.vercel.app/"
 ];
 
 app.use(cors({
