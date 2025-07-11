@@ -9,7 +9,7 @@ const AllConsultants = () => {
   const fetchConsultants = async () => {
     try {
       const token = localStorage.getItem("adminToken");
-      const res = await axios.get("https://mine-vertex.onrender.com/api/consultants", {
+      const res = await axios.get("https://myoverseas.onrender.com/api/consultants", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
