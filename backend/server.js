@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+const prerender = require("prerender-node");
 
 const connectDB = require("./db/db");
 const adminRoutes = require("./routes/consultantRoutes.js");
@@ -10,15 +12,15 @@ connectDB();
 
 const app = express();
 
-// ✅ Corrected allowed origins (no trailing slash)
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:5000",
   "https://www.vertexstudyvisa.com"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Allow requests like Postman
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -30,9 +32,19 @@ app.use(cors({
 
 app.use(express.json());
 
+// ✅ Prerender middleware (DO NOT change anything here)
+app.use(prerender.set("prerenderToken", "vmfW4uQpBGLBlxw4fQcQ"));
+
+// ✅ Routes
 app.use("/api", adminRoutes);
 app.use("/api/admin", consultationRoutes);
 app.use("/api", Auth);
+
+// ✅ Serve static React files
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
