@@ -32,16 +32,23 @@ app.use(cors({
 
 app.use(express.json());
 
-// ✅ Prerender middleware (DO NOT change anything here)
+// ✅ Prerender for SEO
 app.use(prerender.set("prerenderToken", "vmfW4uQpBGLBlxw4fQcQ"));
 
-// ✅ Routes
+// ✅ API Routes
 app.use("/api", adminRoutes);
 app.use("/api/admin", consultationRoutes);
 app.use("/api", Auth);
 
-// ✅ Serve static React files
+// ✅ Serve static React build files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// ✅ Serve Google verification file BEFORE the React catch-all
+app.get("/google838fa3b5432d43e5.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/google838fa3b5432d43e5.html"));
+});
+
+// ✅ React SPA fallback
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
