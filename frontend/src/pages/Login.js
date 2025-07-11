@@ -17,7 +17,7 @@ export default function Login() {
     setSuccessMsg("");
 
     try {
-      const res = await axios.post("https://mine-vertex.onrender.com/api/login", {
+      const res = await axios.post("https://myoverseas.onrender.com/api/login", {
         email,
         password,
       });
