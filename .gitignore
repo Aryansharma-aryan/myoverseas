@@ -15,3 +15,5 @@ Thumbs.db
 backend/google/analytics-key.json
 backend/.env
 .env
+
+backend/google/analytics-key.json
