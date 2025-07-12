@@ -222,7 +222,7 @@ export default function HomePage() {
           />
         </motion.div>
       </AnimatePresence>
-<div className="relative z-10 flex flex-col min-h-screen bg-black/30 backdrop-blur-sm">
+<div className="relative z-10 flex flex-col min-h-screen bg-white/10 backdrop-blur-[2px]">
           {/* Topbar */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 sm:px-6 py-2 border-b border-gray-700 bg-[#0a0a0a] text-sm sm:text-base">
             
@@ -392,35 +392,32 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="flex flex-col items-center justify-center flex-1 px-4 py-8 text-center relative"
           >
-            <h2 className="text-[20px] sm:text-[26px] md:text-[32px] font-bold mb-4 text-white">
-              Achieve Your Dream to Study Abroad with <span className="text-[#ff5a00]">Vertex Study Visa</span>
-            </h2>
-            
+            <h2 className="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold mb-4 text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.7)]">
+  Achieve Your Dream to Study Abroad with  
+  <span className="ml-2 bg-gradient-to-r from-yellow-400 via-red-500 to-emerald-400 bg-clip-text text-transparent font-extrabold animate-pulse">
+    Vertex Study Visa
+  </span>
+</h2>
+
             {/* Main content container with flex layout */}
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-7xl">
               {/* Left side - Typewriter text */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
 <h1 className="text-[32px] sm:text-[44px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-emerald-400 text-center lg:text-left">
-                  <Typewriter
-                    key={typewriterKey}
-                    words={typewriterWords}
-                    loop={Infinity}
-                    cursor
-                    cursorStyle="|"
-                    typeSpeed={50}
-                    deleteSpeed={40}
-                    delaySpeed={800}
-                    onLoopDone={() => {
-                      setCurrentWordIndex((prev) => (prev + 1) % typewriterWords.length);
-                    }}
-                    onType={(count, index) => {
-                      // Update word index when typing starts for a new word
-                      if (index !== undefined) {
-                        setCurrentWordIndex(index);
-                      }
-                    }}
-                  />
-                </h1>
+  <span className="inline-block min-h-[7rem] sm:min-h-[9rem] md:min-h-[11rem]">
+    <Typewriter
+      key={typewriterKey}
+      words={typewriterWords}
+      loop={Infinity}
+      cursor
+      cursorStyle="|"
+      typeSpeed={50}
+      deleteSpeed={40}
+      delaySpeed={800}
+    />
+  </span>
+</h1>
+
               </div>
               
               {/* Right side - Image card */}
@@ -500,9 +497,12 @@ export default function HomePage() {
 
             </div>
             
-            <p className="text-white/80 text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6">
-              We specialize in <span className="text-orange-400">Study Visas</span>, <span className="text-yellow-300">Tourist Visas</span>, and <span className="text-pink-400">Permanent Residency (PR)</span> guidance.
-            </p>
+            <p className="text-white text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6 drop-shadow-[1px_1px_2px_rgba(0,0,0,0.7)]">
+  We specialize in <span className="text-orange-500 font-semibold">Study Visas</span>, 
+  <span className="text-yellow-400 font-semibold"> Tourist Visas</span>, and 
+  <span className="text-rose-400 font-semibold"> Permanent Residency (PR)</span> guidance.
+</p>
+
             
             <Link to="/consultant">
               <button className="relative px-8 py-4 text-white font-semibold text-lg rounded-xl overflow-hidden transition duration-300 hover:scale-105 backdrop-blur-md border border-transparent">
