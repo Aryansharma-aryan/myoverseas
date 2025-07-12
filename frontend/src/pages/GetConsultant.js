@@ -25,7 +25,7 @@ export default function GetConsultant() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://myoverseas.onrender.com", {
+      const response = await fetch("https://mine-vertex.onrender.com/api/consultants", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

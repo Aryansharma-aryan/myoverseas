@@ -6,15 +6,12 @@ import {
   useLocation,
   useNavigationType,
 } from 'react-router-dom';
-import Dashboard from "./pages/Dashboard"
 import { motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import ReactGA from 'react-ga4';
 
 import Loader from './pages/Loader';
 import Footer from './components/Footer';
-import { usePageTracking } from './hooks/usePageTracking';
 
 // Lazy-loaded components
 const HomePage = lazy(() => import('./components/HomePage'));
@@ -37,14 +34,6 @@ function AppWrapper() {
   const location = useLocation();
   const navigationType = useNavigationType();
   const [routeLoading, setRouteLoading] = useState(false);
-
-  // ✅ Initialize Google Analytics once
-  useEffect(() => {
-    ReactGA.initialize("G-CX2ZF4Z1NJ"); // Your Measurement ID
-  }, []);
-
-  // ✅ Track page views
-  usePageTracking();
 
   useEffect(() => {
     AOS.init({ duration: 800 });
@@ -94,22 +83,12 @@ function AppWrapper() {
               }
             />
           </Route>
-          <Route
-  path="/admin/dashboard"
-  element={
-    <ProtectedRoute>
-      <Dashboard />
-    </ProtectedRoute>
-  }
-/>
-
 
           {/* Admin login WITHOUT layout */}
           <Route path="/admin/login" element={<Login />} />
         </Routes>
 
         <Footer />
-        
       </Suspense>
     </motion.div>
   );
