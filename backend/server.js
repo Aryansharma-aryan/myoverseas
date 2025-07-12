@@ -49,9 +49,10 @@ app.use("/api/analytics", analyticsRoutes); // ✅ moved after CORS setup
 
 // 🔐 Google Analytics Integration (GA4)
 const analyticsAuth = new google.auth.GoogleAuth({
-  keyFile: path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS),
-  scopes: "https://www.googleapis.com/auth/analytics.readonly",
+  credentials: JSON.parse(process.env.GA_CREDENTIALS_JSON),
+  scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
 });
+
 
 app.get("/api/analytics", async (req, res) => {
   try {
