@@ -1,63 +1,68 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const prerender = require("prerender-node");
-const favicon = require("serve-favicon");
+const { google } = require("googleapis");
+require("dotenv").config();
 
 const connectDB = require("./db/db");
-const adminRoutes = require("./routes/consultantRoutes.js");
-const consultationRoutes = require("./routes/Auth.js");
-const Auth = require("./routes/Auth.js");
-
-connectDB();
-
 const app = express();
 
-// ✅ Serve favicon (logo) from React build
-app.use(favicon(path.join(__dirname, "../frontend/build/favicon.ico")));
+// Connect to MongoDB (optional)
+connectDB();
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:5000",
-  "https://www.vertexstudyvisa.com"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS: " + origin));
-    }
-  },
-  credentials: true
-}));
-
+app.use(cors());
 app.use(express.json());
 
-// ✅ Prerender for SEO
-app.use(prerender.set("prerenderToken", "vmfW4uQpBGLBlxw4fQcQ"));
-
-// ✅ API Routes
-app.use("/api", adminRoutes);
-app.use("/api/admin", consultationRoutes);
-app.use("/api", Auth);
-
-// ✅ Serve static React build files
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// ✅ Serve Google verification file BEFORE React fallback
-app.get("/google838fa3b5432d43e5.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/google838fa3b5432d43e5.html"));
+// 🔐 Google Analytics Auth Setup
+const analyticsAuth = new google.auth.GoogleAuth({
+  keyFile: path.join(__dirname, "./google/analytics-key.json"),
+  scopes: "https://www.googleapis.com/auth/analytics.readonly",
 });
 
-// ✅ React SPA fallback for client-side routing
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+app.get("/api/analytics", async (req, res) => {
+  try {
+    const propertyId = process.env.GA4_PROPERTY_ID;
+    if (!propertyId) {
+      throw new Error("GA4_PROPERTY_ID is not set in .env");
+    }
+
+    const authClient = await analyticsAuth.getClient();
+    const analyticsDataClient = google.analyticsdata({
+      version: "v1beta",
+      auth: authClient,
+    });
+
+    const getReport = async (startDaysAgo) => {
+      const response = await analyticsDataClient.properties.runReport({
+        property: `properties/${propertyId}`,
+        requestBody: {
+          dateRanges: [
+            {
+              startDate: `${startDaysAgo}daysAgo`,
+              endDate: "today",
+            },
+          ],
+          metrics: [{ name: "activeUsers" }],
+        },
+      });
+
+      return response?.data?.rows?.[0]?.metricValues?.[0]?.value || "0";
+    };
+
+    const [today, last7days, last30days] = await Promise.all([
+      getReport(0),
+      getReport(7),
+      getReport(30),
+    ]);
+
+    res.json({ today, last7days, last30days });
+  } catch (error) {
+    console.error("❌ GA4 API Error:", error?.response?.data || error.message || error);
+    res.status(500).json({ error: "Failed to fetch analytics data" });
+  }
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
