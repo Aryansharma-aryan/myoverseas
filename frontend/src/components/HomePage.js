@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import Dashboard from "../pages/Dashboard"
+
 import {
   FaFacebookF,
   
@@ -198,23 +200,29 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="font-sans text-white overflow-x-hidden max-w-screen">
-      <div className="relative min-h-screen overflow-hidden">
-        <AnimatePresence>
-          <motion.div
-            key={currentImageIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${backgroundImages[currentImageIndex]})`, zIndex: 0 }}
-          >
-            <div className="relative z-10 flex flex-col min-h-screen bg-black/40 backdrop-blur-sm" />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="relative z-10 flex flex-col min-h-screen bg-black/20">
+<div className="font-sans text-white isolate overflow-x-hidden max-w-screen">
+    <div className="relative min-h-screen overflow-hidden bg-[#000000]">
+      <AnimatePresence>
+        <motion.div
+          key={currentImageIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0 z-0"
+        >
+          <div
+            className="w-full h-full bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${backgroundImages[currentImageIndex]})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "brightness(0.5)",
+            }}
+          />
+        </motion.div>
+      </AnimatePresence>
+<div className="relative z-10 flex flex-col min-h-screen bg-black/30 backdrop-blur-sm">
           {/* Topbar */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 sm:px-6 py-2 border-b border-gray-700 bg-[#0a0a0a] text-sm sm:text-base">
             
@@ -296,8 +304,9 @@ export default function HomePage() {
                       className="text-2xl text-white cursor-pointer hover:text-red-400 transition"
                     />
                   </div>
+                  
 
-                  <nav className="flex flex-col gap-4">
+                   <nav className="flex flex-col gap-4">
                     {navLinks.map(({ path, label }, i) => {
                       if (label === "Login") {
                         return isAdmin ? (
@@ -332,8 +341,22 @@ export default function HomePage() {
                           >
                             {label}
                           </Link>
+                          
                         );
                       }
+                      if (label === "Dashboard") {
+    return (
+      <Link
+        key={i}
+        to={path}
+        onClick={toggleSidebar}
+        className="px-5 py-3 bg-cyan-900 text-cyan-300 border border-cyan-400 rounded-lg font-semibold hover:bg-cyan-800 transition animate-pulse"
+      >
+        {label}
+      </Link>
+    );
+  }
+
                       return (
                         <Link
                           key={i}
@@ -377,7 +400,7 @@ export default function HomePage() {
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-7xl">
               {/* Left side - Typewriter text */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
-                <h1 className="text-[32px] sm:text-[44px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 to-pink-500 text-center lg:text-left">
+<h1 className="text-[32px] sm:text-[44px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-emerald-400 text-center lg:text-left">
                   <Typewriter
                     key={typewriterKey}
                     words={typewriterWords}
@@ -401,99 +424,80 @@ export default function HomePage() {
               </div>
               
               {/* Right side - Image card */}
-              <div className="flex-1 flex justify-center lg:justify-end">
-                <AnimatePresence mode="wait">
-                  {typewriterImages[currentWordIndex] && (
-                    <motion.div
-                      key={currentWordIndex}
-                      initial={{ opacity: 0, x: 100, scale: 0.8 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: -100, scale: 0.8 }}
-                      transition={{ 
-                        duration: 0.6, 
-                        ease: "easeInOut",
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 20
-                      }}
-                      className="relative"
-                    >
-                      {/* Floating Image Card */}
-                      <div className="relative group">
-                        {/* Animated gradient background */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-400/30 via-yellow-300/30 via-pink-500/30 to-purple-500/30 rounded-2xl blur-xl transform scale-110 animate-pulse group-hover:animate-none group-hover:blur-2xl transition-all duration-500"></div>
-                        
-                        {/* Floating orbs around the card */}
-                        <div className="absolute -top-2 -left-2 w-4 h-4 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full animate-float opacity-80"></div>
-                        <div className="absolute -top-1 -right-3 w-3 h-3 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full animate-float-delayed opacity-70"></div>
-                        <div className="absolute -bottom-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-teal-400 rounded-full animate-float-slow opacity-60"></div>
-                        <div className="absolute -bottom-1 -left-3 w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-float-fast opacity-50"></div>
-                        
-                        {/* Main glassmorphism card */}
-                        <motion.div
-                          whileHover={{ scale: 1.05, rotateY: 5 }}
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                          className="relative overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64"
-                          style={{
-                            background: `
-                              linear-gradient(135deg, 
-                                rgba(255,255,255,0.1) 0%, 
-                                rgba(255,255,255,0.05) 25%, 
-                                rgba(255,255,255,0.02) 50%, 
-                                rgba(255,255,255,0.08) 75%, 
-                                rgba(255,255,255,0.1) 100%
-                              )
-                            `,
-                            boxShadow: `
-                              0 25px 50px -12px rgba(0,0,0,0.3),
-                              0 0 50px rgba(255,165,0,0.1),
-                              inset 0 1px 0 rgba(255,255,255,0.1),
-                              inset 0 -1px 0 rgba(255,255,255,0.05)
-                            `
-                          }}
-                        >
-                          {/* Animated border lines */}
-                          <div className="absolute inset-0 rounded-2xl">
-                            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent animate-shimmer"></div>
-                            <div className="absolute bottom-0 right-0 w-full h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-shimmer-reverse"></div>
-                            <div className="absolute top-0 left-0 w-0.5 h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent animate-shimmer-vertical"></div>
-                            <div className="absolute top-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-purple-400 to-transparent animate-shimmer-vertical-reverse"></div>
-                          </div>
-                          
-                          {/* Inner content */}
-                          <div className="relative p-4 h-full">
-                            {/* Profile image container */}
-                            <div className="relative w-full h-full">
-                              {/* Image glow effect */}
-                              <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 via-yellow-300/20 to-pink-500/20 rounded-xl blur-md animate-pulse"></div>
-                              
-                              {/* Image frame */}
-                              <div className="relative overflow-hidden rounded-xl border border-white/20 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm h-full">
-                                <motion.img
-                                  src={typewriterImages[currentWordIndex]}
-                                  alt={`${typewriterWords[currentWordIndex]} representative`}
-                                  className="w-full h-full object-cover"
-                                  whileHover={{ scale: 1.1 }}
-                                  transition={{ duration: 0.5 }}
-                                />
-                                
-                                {/* Image overlay effects */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5"></div>
-                                <div className="absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-pink-500/5"></div>
-                                
-                                {/* Sparkle effects */}
-                                <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
-                                <div className="absolute bottom-3 left-3 w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
-                                <div className="absolute top-1/2 left-2 w-0.5 h-0.5 bg-pink-400 rounded-full animate-bounce"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+             <div className="flex-1 flex justify-center lg:justify-end">
+  <AnimatePresence mode="wait">
+    {typewriterImages[currentWordIndex] && (
+      <motion.div
+        key={currentWordIndex}
+        initial={{ opacity: 0, x: 100, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        exit={{ opacity: 0, x: -100, scale: 0.8 }}
+        transition={{ duration: 0.6, ease: "easeInOut", type: "spring", stiffness: 100, damping: 20 }}
+        className="relative"
+      >
+        {/* Floating Image Card */}
+        <div className="relative group">
+          {/* Thin Animated glow background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-green-400/20 to-red-500/30 rounded-2xl blur-lg scale-105 animate-pulse group-hover:blur-xl transition-all duration-700"></div>
+
+          {/* Floating orbs in 3-theme only */}
+          <div className="absolute -top-2 -left-2 w-3 h-3 bg-yellow-400 rounded-full animate-float opacity-80"></div>
+          <div className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-red-400 rounded-full animate-float-delayed opacity-70"></div>
+          <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-green-400 rounded-full animate-float-slow opacity-60"></div>
+          <div className="absolute -bottom-1 -left-3 w-2 h-2 bg-yellow-400 rounded-full animate-float-fast opacity-50"></div>
+
+          {/* Main glass card */}
+          <motion.div
+            whileHover={{ scale: 1.05, rotateY: 5 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-gradient-to-br from-white/10 via-white/5 to-transparent"
+            style={{
+              background: `linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))`,
+              boxShadow: `0 20px 40px -10px rgba(0,0,0,0.4), 0 0 20px rgba(255,200,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05)`,
+            }}
+          >
+            {/* Thin Shimmer border lines */}
+            <div className="absolute inset-0 rounded-2xl">
+              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-shimmer"></div>
+              <div className="absolute bottom-0 right-0 w-full h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent animate-shimmer-reverse"></div>
+              <div className="absolute top-0 left-0 w-0.5 h-full bg-gradient-to-b from-transparent via-green-400 to-transparent animate-shimmer-vertical"></div>
+              <div className="absolute top-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent animate-shimmer-vertical-reverse"></div>
+            </div>
+
+            {/* Inner content */}
+            <div className="relative p-4 h-full">
+              <div className="relative w-full h-full">
+                {/* Glow background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-green-400/10 to-red-500/10 rounded-xl blur-md animate-pulse"></div>
+
+                {/* Image */}
+                <div className="relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm h-full">
+                  <motion.img
+                    src={typewriterImages[currentWordIndex]}
+                    alt={`${typewriterWords[currentWordIndex]} representative`}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+
+                  {/* Subtle overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-red-500/5"></div>
+
+                  {/* Glow sparks */}
+                  <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
+                  <div className="absolute bottom-3 left-3 w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
+                  <div className="absolute top-1/2 left-2 w-0.5 h-0.5 bg-green-400 rounded-full animate-bounce"></div>
+                </div>
               </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+
             </div>
             
             <p className="text-white/80 text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6">
@@ -512,7 +516,7 @@ export default function HomePage() {
       </div>
 
       {/* Section Stack */}
-      {[AboutSection, WhyChooseVertex, ServicesSection, FounderSection, GuidanceSection, CountriesWeServe, TestPreparation, Team, SuccessStory, ConsultationSection].map((Section, i) => (
+      {[AboutSection, WhyChooseVertex, ServicesSection, FounderSection, GuidanceSection, CountriesWeServe, TestPreparation, Team, SuccessStory,Dashboard, ConsultationSection].map((Section, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, y: 40 }}

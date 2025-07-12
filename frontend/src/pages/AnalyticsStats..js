@@ -11,12 +11,21 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip as ChartTooltip,
+  Legend as ChartLegend,
+} from "chart.js";
+
+ChartJS.register(ArcElement, ChartTooltip, ChartLegend);
 
 const AnalyticsStats = () => {
   const [analytics, setAnalytics] = useState({
-    today: null,
-    last7days: null,
-    last30days: null,
+    today: 0,
+    last7days: 0,
+    last30days: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -45,59 +54,91 @@ const AnalyticsStats = () => {
     { name: "Last 30 Days", Users: parseInt(analytics.last30days || 0) },
   ];
 
+  const doughnutData = {
+    labels: ["Today", "Last 7 Days", "Last 30 Days"],
+    datasets: [
+      {
+        label: "Visitors",
+        data: [
+          parseInt(analytics.today || 0),
+          parseInt(analytics.last7days || 0),
+          parseInt(analytics.last30days || 0),
+        ],
+        backgroundColor: ["#facc15", "#ef4444", "#22c55e"], // yellow, red, green
+        borderColor: "#0f172a",
+        borderWidth: 1,
+        cutout: "80%", // Thin ring
+      },
+    ],
+  };
+
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto mt-10 border-2 border-yellow-500">
-      <h2 className="text-3xl font-extrabold mb-4 text-yellow-400 text-center tracking-wide">
-        📊 Website Visitors Analytics
+    <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white p-10 rounded-3xl shadow-2xl max-w-[95%] xl:max-w-7xl mx-auto mt-10 border border-yellow-400">
+      <h2 className="text-4xl font-extrabold mb-8 text-yellow-400 text-center tracking-wide">
+        📊 Website Visitor Analytics
       </h2>
 
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-8">
         <button
           onClick={fetchAnalytics}
-          className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-4 py-2 rounded shadow transition"
+          className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-6 py-2 rounded-full shadow-md transition-all duration-300"
         >
           🔁 Refresh
         </button>
       </div>
 
       {loading ? (
-        <p className="text-gray-300 text-center">Loading analytics...</p>
+        <p className="text-center text-gray-300">Loading...</p>
       ) : error ? (
-        <p className="text-red-500 text-center">{error}</p>
+        <p className="text-center text-red-500">{error}</p>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-8">
-            <div className="bg-gray-800 p-5 rounded-lg shadow border border-green-500">
-              <p className="text-lg">👁️ <strong>Today</strong></p>
-              <p className="text-2xl font-bold text-green-400">
-                <CountUp end={parseInt(analytics.today)} duration={1.5} separator="," />
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-10">
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-yellow-400">
+              <p className="text-lg mb-2">👁️ <strong>Today</strong></p>
+              <p className="text-3xl font-extrabold text-yellow-300">
+                <CountUp end={parseInt(analytics.today)} duration={1.2} separator="," />
               </p>
             </div>
-            <div className="bg-gray-800 p-5 rounded-lg shadow border border-blue-500">
-              <p className="text-lg">📆 <strong>Last 7 Days</strong></p>
-              <p className="text-2xl font-bold text-blue-400">
-                <CountUp end={parseInt(analytics.last7days)} duration={2} separator="," />
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-red-500">
+              <p className="text-lg mb-2">📆 <strong>Last 7 Days</strong></p>
+              <p className="text-3xl font-extrabold text-red-400">
+                <CountUp end={parseInt(analytics.last7days)} duration={1.4} separator="," />
               </p>
             </div>
-            <div className="bg-gray-800 p-5 rounded-lg shadow border border-pink-500">
-              <p className="text-lg">🗓️ <strong>Last 30 Days</strong></p>
-              <p className="text-2xl font-bold text-pink-400">
-                <CountUp end={parseInt(analytics.last30days)} duration={2.2} separator="," />
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-green-500">
+              <p className="text-lg mb-2">🗓️ <strong>Last 30 Days</strong></p>
+              <p className="text-3xl font-extrabold text-green-400">
+                <CountUp end={parseInt(analytics.last30days)} duration={1.6} separator="," />
               </p>
             </div>
           </div>
 
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="name" stroke="#ccc" />
-                <YAxis stroke="#ccc" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Users" fill="#facc15" barSize={50} />
-              </BarChart>
-            </ResponsiveContainer>
+          {/* Charts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Thin Doughnut Chart */}
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-center text-white">Visitors Distribution</h3>
+              <div className="w-full sm:w-4/5 mx-auto">
+                <Doughnut data={doughnutData} />
+              </div>
+            </div>
+
+            {/* Bar Chart */}
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-center text-white">Bar Chart Overview</h3>
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
+                  <XAxis dataKey="name" stroke="#cbd5e1" />
+                  <YAxis stroke="#cbd5e1" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="Users" fill="#facc15" barSize={40} radius={[10, 10, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </>
       )}
