@@ -3,7 +3,8 @@ const router = express.Router();
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
 
 // ✅ Load key directly from local file
-const key = require("../google/analytics-key.json");
+const key = JSON.parse(process.env.GA_CREDENTIALS_JSON);
+
 const PROPERTY_ID = process.env.GA4_PROPERTY_ID;
 
 if (!PROPERTY_ID || !key) {
