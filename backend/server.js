@@ -5,32 +5,21 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
-const analyticsRoutes = require("./routes/Analytics");
-
 
 // 🛢️ MongoDB Connection
 const connectDB = require("./db/db");
 const app = express();
 
-
-// 🛣️ Routes
-const Auth = require("./routes/Auth");
-const consult = require("./routes/consultantRoutes");
-app.use("/api/analytics", analyticsRoutes);
-
-
-
-// ✅ Connect to MongoDB
-connectDB();
-
 // ✅ Middleware to parse JSON
 app.use(express.json());
 
-// ✅ CORS Configuration
+// ✅ CORS Configuration - Place BEFORE routes
 const allowedOrigins = [
   "http://localhost:3000",
   "https://www.vertexstudyvisa.com",
-  "https://myoverseas.vercel.app"
+  "https://myoverseas.vercel.app",
+  "https://myoverseas.onrender.com" // ✅ Add your backend domain too
+
 ];
 
 app.use(
@@ -46,13 +35,21 @@ app.use(
   })
 );
 
-// ✅ API Routes
+// ✅ Connect to MongoDB
+connectDB();
+
+// 🛣️ Routes
+const Auth = require("./routes/Auth");
+const consult = require("./routes/consultantRoutes");
+const analyticsRoutes = require("./routes/Analytics");
+
 app.use("/api", Auth);
 app.use("/api", consult);
+app.use("/api/analytics", analyticsRoutes); // ✅ moved after CORS setup
 
 // 🔐 Google Analytics Integration (GA4)
 const analyticsAuth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google/analytics-key.json"),
+  keyFile: path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS),
   scopes: "https://www.googleapis.com/auth/analytics.readonly",
 });
 
