@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
-const path = require("path");
 
-// Load service account JSON
-const key = require(path.join(__dirname, "../google/analytics-key.json"));
-const PROPERTY_ID = "467695887"; // Replace with your GA4 Property ID
+// ✅ Load key directly from local file
+const key = require("../google/analytics-key.json");
+const PROPERTY_ID = process.env.GA4_PROPERTY_ID;
 
-// Create GA4 Data client
+if (!PROPERTY_ID || !key) {
+  throw new Error("GA4 credentials or property ID are missing.");
+}
+
+// ✅ Create GA4 Data API client
 const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
     client_email: key.client_email,
@@ -15,7 +18,7 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   },
 });
 
-// Helper function to fetch active users
+// Helper function
 const getUserCount = async (startDate, endDate) => {
   const [response] = await analyticsDataClient.runReport({
     property: `properties/${PROPERTY_ID}`,
@@ -26,7 +29,7 @@ const getUserCount = async (startDate, endDate) => {
   return response?.rows?.[0]?.metricValues?.[0]?.value || "0";
 };
 
-// GET /api/analytics
+// Route
 router.get("/", async (req, res) => {
   try {
     const [today, last7days, last30days] = await Promise.all([
@@ -37,7 +40,7 @@ router.get("/", async (req, res) => {
 
     res.json({ today, last7days, last30days });
   } catch (error) {
-    console.error("❌ GA4 API Error:", error.response?.data || error.message || error);
+    console.error("❌ GA4 Error:", error);
     res.status(500).json({ error: "Failed to fetch analytics" });
   }
 });

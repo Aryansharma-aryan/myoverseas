@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ export default function Login() {
     setSuccessMsg("");
 
     try {
-      const res = await axios.post("https://mine-vertex.onrender.com/api/login", {
+      const res = await axios.post("https://myoverseas.onrender.com/api/login", {
         email,
         password,
       });

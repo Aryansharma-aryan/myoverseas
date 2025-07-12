@@ -23,7 +23,7 @@ const AnalyticsStats = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/analytics");
+        const response = await axios.get("https://myoverseas.onrender.com/api/analytics");
         setAnalytics(response.data);
         setLoading(false);
       } catch (err) {

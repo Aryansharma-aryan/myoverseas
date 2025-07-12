@@ -1,25 +1,41 @@
+// 🌍 Load environment variables
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
-require("dotenv").config();
+const analyticsRoutes = require("./routes/Analytics");
 
+
+// 🛢️ MongoDB Connection
 const connectDB = require("./db/db");
 const app = express();
 
-// Connect to MongoDB
+
+// 🛣️ Routes
+const Auth = require("./routes/Auth");
+const consult = require("./routes/consultantRoutes");
+app.use("/api/analytics", analyticsRoutes);
+
+
+
+// ✅ Connect to MongoDB
 connectDB();
+
+// ✅ Middleware to parse JSON
+app.use(express.json());
 
 // ✅ CORS Configuration
 const allowedOrigins = [
   "http://localhost:3000",
   "https://www.vertexstudyvisa.com",
+  "https://myoverseas.vercel.app"
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, etc.)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -30,20 +46,20 @@ app.use(
   })
 );
 
-app.use(express.json());
+// ✅ API Routes
+app.use("/api", Auth);
+app.use("/api", consult);
 
-// 🔐 Google Analytics Auth Setup
+// 🔐 Google Analytics Integration (GA4)
 const analyticsAuth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, "./google/analytics-key.json"),
+  keyFile: path.join(__dirname, process.env.GOOGLE_APPLICATION_CREDENTIALS || "./google/analytics-key.json"),
   scopes: "https://www.googleapis.com/auth/analytics.readonly",
 });
 
 app.get("/api/analytics", async (req, res) => {
   try {
     const propertyId = process.env.GA4_PROPERTY_ID;
-    if (!propertyId) {
-      throw new Error("GA4_PROPERTY_ID is not set in .env");
-    }
+    if (!propertyId) throw new Error("GA4_PROPERTY_ID is not set in .env");
 
     const authClient = await analyticsAuth.getClient();
     const analyticsDataClient = google.analyticsdata({
@@ -51,38 +67,33 @@ app.get("/api/analytics", async (req, res) => {
       auth: authClient,
     });
 
-    const getReport = async (startDaysAgo) => {
-      const response = await analyticsDataClient.properties.runReport({
+    const getActiveUsers = async (startDate, endDate) => {
+      const result = await analyticsDataClient.properties.runReport({
         property: `properties/${propertyId}`,
         requestBody: {
-          dateRanges: [
-            {
-              startDate: `${startDaysAgo}daysAgo`,
-              endDate: "today",
-            },
-          ],
+          dateRanges: [{ startDate, endDate }],
           metrics: [{ name: "activeUsers" }],
         },
       });
 
-      return response?.data?.rows?.[0]?.metricValues?.[0]?.value || "0";
+      return result?.data?.rows?.[0]?.metricValues?.[0]?.value || "0";
     };
 
     const [today, last7days, last30days] = await Promise.all([
-      getReport(0),
-      getReport(7),
-      getReport(30),
+      getActiveUsers("today", "today"),
+      getActiveUsers("7daysAgo", "today"),
+      getActiveUsers("30daysAgo", "today"),
     ]);
 
     res.json({ today, last7days, last30days });
   } catch (error) {
-    console.error("❌ GA4 API Error:", error?.response?.data || error.message || error);
+    console.error("❌ GA4 API Error:", error?.response?.data || error.message);
     res.status(500).json({ error: "Failed to fetch analytics data" });
   }
 });
 
-// ✅ Server start
+// ✅ Server Start
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

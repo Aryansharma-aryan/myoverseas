@@ -12,6 +12,7 @@ import 'aos/dist/aos.css';
 
 import Loader from './pages/Loader';
 import Footer from './components/Footer';
+import Dashboard from './pages/Dashboard';
 
 // Lazy-loaded components
 const HomePage = lazy(() => import('./components/HomePage'));
@@ -29,6 +30,7 @@ const Team = lazy(() => import('./pages/Team'));
 const Login = lazy(() => import('./pages/Login'));
 const AllConsultants = lazy(() => import('./pages/AllConsultants'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+
 
 function AppWrapper() {
   const location = useLocation();
@@ -72,6 +74,7 @@ function AppWrapper() {
             <Route path="/consultant" element={<GetConsultant />} />
             <Route path="/faq" element={<ConsultationSection />} />
             <Route path="/team" element={<Team />} />
+<Route path="/admin/dashboard" element={<Dashboard />} />
 
             {/* Admin route WITH layout */}
             <Route
@@ -83,6 +86,7 @@ function AppWrapper() {
               }
             />
           </Route>
+          
 
           {/* Admin login WITHOUT layout */}
           <Route path="/admin/login" element={<Login />} />

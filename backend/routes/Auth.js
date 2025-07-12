@@ -2,10 +2,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-// Replace with strong credentials in real projects
 const ADMIN_EMAIL = "gsgb5555@gmail.com";
 const ADMIN_PASSWORD = "123456";
-const JWT_SECRET = "gurbazzsir1234"; // In real-world, keep in .env
+const JWT_SECRET = "gurbazzsir1234"; // use process.env.JWT_SECRET in production
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
