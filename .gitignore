@@ -10,3 +10,8 @@ backend/.cache/
 .env
 .DS_Store
 Thumbs.db
+
+# Secrets
+backend/google/analytics-key.json
+backend/.env
+.env
