@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CountUp from "react-countup";
 import {
   BarChart,
   Bar,
@@ -20,19 +21,21 @@ const AnalyticsStats = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const fetchAnalytics = async () => {
-      try {
-        const response = await axios.get("https://myoverseas.onrender.com/api/analytics");
-        setAnalytics(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching analytics:", err);
-        setError("❌ Failed to fetch analytics data.");
-        setLoading(false);
-      }
-    };
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.get("https://myoverseas.onrender.com/api/analytics");
+      setAnalytics(response.data);
+    } catch (err) {
+      console.error("Error fetching analytics:", err);
+      setError("❌ Failed to fetch analytics data.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAnalytics();
   }, []);
 
@@ -44,9 +47,18 @@ const AnalyticsStats = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto mt-10 border-2 border-yellow-500">
-      <h2 className="text-3xl font-extrabold mb-6 text-yellow-400 text-center tracking-wide">
+      <h2 className="text-3xl font-extrabold mb-4 text-yellow-400 text-center tracking-wide">
         📊 Website Visitors Analytics
       </h2>
+
+      <div className="flex justify-center mb-6">
+        <button
+          onClick={fetchAnalytics}
+          className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-4 py-2 rounded shadow transition"
+        >
+          🔁 Refresh
+        </button>
+      </div>
 
       {loading ? (
         <p className="text-gray-300 text-center">Loading analytics...</p>
@@ -57,15 +69,21 @@ const AnalyticsStats = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-8">
             <div className="bg-gray-800 p-5 rounded-lg shadow border border-green-500">
               <p className="text-lg">👁️ <strong>Today</strong></p>
-              <p className="text-2xl font-bold text-green-400">{analytics.today}</p>
+              <p className="text-2xl font-bold text-green-400">
+                <CountUp end={parseInt(analytics.today)} duration={1.5} separator="," />
+              </p>
             </div>
             <div className="bg-gray-800 p-5 rounded-lg shadow border border-blue-500">
               <p className="text-lg">📆 <strong>Last 7 Days</strong></p>
-              <p className="text-2xl font-bold text-blue-400">{analytics.last7days}</p>
+              <p className="text-2xl font-bold text-blue-400">
+                <CountUp end={parseInt(analytics.last7days)} duration={2} separator="," />
+              </p>
             </div>
             <div className="bg-gray-800 p-5 rounded-lg shadow border border-pink-500">
               <p className="text-lg">🗓️ <strong>Last 30 Days</strong></p>
-              <p className="text-2xl font-bold text-pink-400">{analytics.last30days}</p>
+              <p className="text-2xl font-bold text-pink-400">
+                <CountUp end={parseInt(analytics.last30days)} duration={2.2} separator="," />
+              </p>
             </div>
           </div>
 
