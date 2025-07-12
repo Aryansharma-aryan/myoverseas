@@ -37,7 +37,7 @@ connectDB();
 // ✅ Routes
 app.use("/api", Auth);
 app.use("/api", consult);
-app.use("/api/analytics", analyticsRoutes); // ✅ clean mount
+app.use("/api", analyticsRoutes); // ✅ clean mount
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
