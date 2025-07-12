@@ -2,29 +2,26 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
-require("dotenv").config();
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const connectDB = require("./db/db");
 const app = express();
 
-// Connect to MongoDB (optional)
 connectDB();
 
 app.use(cors());
 app.use(express.json());
 
-// 🔐 Google Analytics Auth Setup
+// Analytics Auth (no hardcoded path)
 const analyticsAuth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, "./google/analytics-key.json"),
+  keyFile: path.join(__dirname, process.env.GOOGLE_APPLICATION_CREDENTIALS),
   scopes: "https://www.googleapis.com/auth/analytics.readonly",
 });
 
 app.get("/api/analytics", async (req, res) => {
   try {
     const propertyId = process.env.GA4_PROPERTY_ID;
-    if (!propertyId) {
-      throw new Error("GA4_PROPERTY_ID is not set in .env");
-    }
+    if (!propertyId) throw new Error("GA4_PROPERTY_ID not set in .env");
 
     const authClient = await analyticsAuth.getClient();
     const analyticsDataClient = google.analyticsdata({
@@ -33,20 +30,15 @@ app.get("/api/analytics", async (req, res) => {
     });
 
     const getReport = async (startDaysAgo) => {
-      const response = await analyticsDataClient.properties.runReport({
+      const [response] = await analyticsDataClient.properties.runReport({
         property: `properties/${propertyId}`,
         requestBody: {
-          dateRanges: [
-            {
-              startDate: `${startDaysAgo}daysAgo`,
-              endDate: "today",
-            },
-          ],
+          dateRanges: [{ startDate: `${startDaysAgo}daysAgo`, endDate: "today" }],
           metrics: [{ name: "activeUsers" }],
         },
       });
 
-      return response?.data?.rows?.[0]?.metricValues?.[0]?.value || "0";
+      return response?.rows?.[0]?.metricValues?.[0]?.value || "0";
     };
 
     const [today, last7days, last30days] = await Promise.all([
@@ -57,7 +49,7 @@ app.get("/api/analytics", async (req, res) => {
 
     res.json({ today, last7days, last30days });
   } catch (error) {
-    console.error("❌ GA4 API Error:", error?.response?.data || error.message || error);
+    console.error("❌ GA4 API Error:", error.message || error);
     res.status(500).json({ error: "Failed to fetch analytics data" });
   }
 });
