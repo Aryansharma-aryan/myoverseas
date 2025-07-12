@@ -84,7 +84,10 @@ export default function HomePage() {
     { path: "/contact", label: "Contact" },
     { path: "/Faq", label: "FAQ" },
     { path: "/team", label: "Team" },
+    {path: "/admin/dashboard", label:"Dashboard"},
     { path: "/admin/login", label: "Login" },
+    
+    
   ];
 
   return (
