@@ -30,11 +30,22 @@ export default {
         typing: "typing 3.5s steps(30, end) 1 forwards",
         blink: "blink 0.8s step-end infinite",
         zoom: "zoom 20s ease-in-out infinite", // ✅ Zoom Animation
+        colorShift: 'colorShift 6s ease-in-out infinite',
+        pulseGlow: 'pulseGlow 2.5s ease-in-out infinite',
       },
       keyframes: {
         fade: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.3" },
+        },
+        colorShift: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+        pulseGlow: {
+          '0%, 100%': { textShadow: '0 0 10px #ffa500, 0 0 20px #ff1493' },
+          '50%': { textShadow: '0 0 20px #ff4500, 0 0 30px #00ffff' },
         },
         blob: {
           "0%": { transform: "translate(0px, 0px) scale(1)" },
@@ -74,6 +85,9 @@ export default {
           "0%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1)" },
+          backgroundSize: {
+        '200': '200% 200%',
+      },
         },
       },
     },

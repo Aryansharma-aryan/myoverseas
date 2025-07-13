@@ -55,6 +55,7 @@ export default function HomePage() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+
   // Add custom styles for animations
   useEffect(() => {
     const style = document.createElement('style');
@@ -392,32 +393,53 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="flex flex-col items-center justify-center flex-1 px-4 py-8 text-center relative"
           >
-            <h2 className="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold mb-4 text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.7)]">
-  Achieve Your Dream to Study Abroad with  
-  <span className="ml-2 bg-gradient-to-r from-yellow-400 via-red-500 to-emerald-400 bg-clip-text text-transparent font-extrabold animate-pulse">
+<h2 className="text-[20px] sm:text-[26px] md:text-[32px] lg:text-[38px] xl:text-[42px] font-extrabold mb-4 text-center leading-snug drop-shadow-[2px_2px_5px_rgba(0,0,0,0.6)]">
+  Achieve Your Dream to Study Abroad with
+  <span
+    className="
+      ml-2 inline-block
+      bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500
+      bg-[length:200%_200%] bg-clip-text text-transparent
+      animate-colorShift animate-pulseGlow font-extrabold
+    "
+  >
     Vertex Study Visa
   </span>
 </h2>
+
+
+
 
             {/* Main content container with flex layout */}
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-7xl">
               {/* Left side - Typewriter text */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
-<h1 className="text-[32px] sm:text-[44px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-emerald-400 text-center lg:text-left">
-  <span className="inline-block min-h-[7rem] sm:min-h-[9rem] md:min-h-[11rem]">
-    <Typewriter
+<h1 className="text-[40px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] via-[#FF7F50] to-white text-center lg:text-left">
+  <AnimatePresence mode="wait">
+    <motion.span
       key={typewriterKey}
-      words={typewriterWords}
-      loop={Infinity}
-      cursor
-      cursorStyle="|"
-      typeSpeed={50}
-      deleteSpeed={40}
-      delaySpeed={800}
-    />
-  </span>
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      transition={{
+        duration: 0.6,
+        ease: [0.25, 0.8, 0.25, 1], // elegant ease
+      }}
+      className="inline-block min-h-[7rem] sm:min-h-[9rem] md:min-h-[11rem]"
+    >
+      <Typewriter
+        words={typewriterWords}
+        loop={Infinity}
+        cursor
+        cursorStyle="|"
+        typeSpeed={50}
+        deleteSpeed={40}
+        delaySpeed={1000}
+        onLoopDone={() => setTypewriterKey(prev => prev + 1)}
+      />
+    </motion.span>
+  </AnimatePresence>
 </h1>
-
               </div>
               
               {/* Right side - Image card */}
@@ -496,12 +518,13 @@ export default function HomePage() {
 </div>
 
             </div>
-            
-            <p className="text-white text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6 drop-shadow-[1px_1px_2px_rgba(0,0,0,0.7)]">
-  We specialize in <span className="text-orange-500 font-semibold">Study Visas</span>, 
-  <span className="text-yellow-400 font-semibold"> Tourist Visas</span>, and 
-  <span className="text-rose-400 font-semibold"> Permanent Residency (PR)</span> guidance.
+<p className="text-white text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6 drop-shadow-[2px_2px_3px_rgba(0,0,0,0.8)]">
+  We specialize in <span className="text-[#FF6B00] font-extrabold">Study Visas</span>, 
+  <span className="text-[#EAAA00] font-extrabold"> Tourist Visas</span>, and 
+  <span className="text-[#C71585] font-extrabold"> Permanent Residency (PR)</span> guidance.
 </p>
+
+
 
             
             <Link to="/consultant">
