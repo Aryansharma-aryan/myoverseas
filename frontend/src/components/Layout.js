@@ -159,7 +159,7 @@ const Layout = () => {
               { path: "/Faq", label: "FAQ" },
               { path: "/team", label: "Team" },
               ...(isAdmin
-                ? [{ path: "/dashboard", label: "Dashboard" }]
+                ? [{ path: "/admin/dashboard", label: "Dashboard" }]
                 : []),
             ].map(({ path, label }, i) => (
               <Link
