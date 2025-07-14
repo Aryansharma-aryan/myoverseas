@@ -109,9 +109,13 @@ const TeamCard3D = ({ name, role, image, experience, specialties, achievements, 
           </div>
 
           <div>
-            <p className="text-xs text-gray-300 leading-relaxed italic">
-              "{description}"
-            </p>
+            <div className="text-xs text-gray-300 leading-relaxed">
+              {typeof description === 'string' && description.includes('✅ Key Responsibilities') ? (
+                <div dangerouslySetInnerHTML={{ __html: description }} />
+              ) : (
+                <p className="italic">"{description}"</p>
+              )}
+            </div>
           </div>
         </motion.div>
       )}
@@ -150,53 +154,60 @@ const members = [
     languages: ["English", "Hindi", "Punjabi"],
     description: "With extensive experience in tourist visa operations, Karanpal has helped thousands of families reunite and explore the world. His expertise in handling complex cases and embassy relations makes him invaluable for challenging applications."
   },
-{
+  {
     name: "Ms. Kajal Rana",
     role: "Senior Consultant - UK Study Visa",
     image: ukConsult,
     experience: "5+ Years",
     specialties: ["UK Student Route", "CAS Processing", "Tier 4 Visa", "Graduate Route"],
     achievements: {
-      successRate: "93%",
+      successRate: "99%",
       details: [
-        "Successfully processed 1000+ UK student visas",
-        "Expert in Student Route applications post-Brexit",
-        "Specialized in Russell Group university applications",
-        "Guided students through Graduate Route transitions"
+        "Successfully secured UK Study Visas for applicants with 2–3 prior refusals.",
+        "Helped candidates with long education gaps (5+ years) obtain study visas.",
+        "Delivered positive visa outcomes for high-risk cases where others had failed.",
+        "Converted challenging profiles into success stories – including those trying for 5+ years.",
+        "Maintained high visa success rate by personalized SOPs, strong documentation, and close follow-up."
       ]
     },
     languages: ["English", "Hindi", "Punjabi"],
     description: `
-Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing in student recruitment and visa counseling with a proven success rate of 93%.
+<div class="space-y-4">
+  <div class="text-green-400 font-semibold text-base">✅ Key Responsibilities</div>
+  
+  <ul class="text-xs text-gray-300 space-y-1 list-disc list-inside">
+    <li>Counseling students for UK study visas and guiding them throughout the admission and visa process.</li>
+    <li>Filing UK student visa applications independently (UKVI portal).</li>
+    <li>Managing payments including tuition fees, IHS, and visa fees.</li>
+    <li>Coordinating with universities, students, and B2B agents.</li>
+    <li>Handling student recruitment, enrollment, and screening for UK universities.</li>
+    <li>Managing team operations, assigning tasks, and ensuring smooth workflow.</li>
+    <li>Responding to student and partner queries via email, calls, and WhatsApp.</li>
+    <li>Taking care of documentation: CAS, SOPs, financials, TB reports, etc.</li>
+    <li>Maintaining office records, follow-ups, and operational reporting.</li>
+    <li>Supporting marketing campaigns, content creation, and outreach.</li>
+  </ul>
 
-✅ **Key Responsibilities:**
-• Counseling students for UK study visas and guiding them throughout the admission and visa process.  
-• Filing UK student visa applications independently (UKVI portal).  
-• Managing payments including tuition fees, IHS, and visa fees.  
-• Coordinating with universities, students, and B2B agents.  
-• Handling student recruitment, enrollment, and screening for UK universities.  
-• Managing team operations, assigning tasks, and ensuring smooth workflow.  
-• Responding to student and partner queries via email, calls, and WhatsApp.  
-• Taking care of documentation: CAS, SOPs, financials, TB reports, etc.  
-• Maintaining office records, follow-ups, and operational reporting.  
-• Supporting marketing campaigns, content creation, and outreach.  
+  <div class="text-yellow-400 font-semibold text-sm">🎓 Education</div>
+  <ul class="text-xs text-gray-300 space-y-1 list-disc list-inside">
+    <li><strong>Master of Arts in English</strong>, IGNOU – Indira Gandhi National Open University (2022) – 66%</li>
+    <li><strong>Bachelor of Science (Chemistry)</strong>, Himachal Pradesh University (HPU) (2017) – 72%</li>
+  </ul>
 
-🎓 **Education:**  
-- Master of Arts in English – IGNOU (2022) – 66%  
-- Bachelor of Science (Chemistry) – Himachal Pradesh University (2017) – 72%  
-
-💻 **Skills:**  
-- UK Student Visa Filing & Counseling  
-- Student Recruitment & Enrollment  
-- Payment & Financial Handling  
-- Email & Client Communication  
-- Team Management & Task Delegation  
-- B2B Coordination  
-- MS Office & WhatsApp CRM  
-- Operations & Documentation Handling
+  <div class="text-blue-400 font-semibold text-sm">💻 Skills</div>
+  <ul class="text-xs text-gray-300 space-y-1 list-disc list-inside">
+    <li>UK Student Visa Filing & Counseling</li>
+    <li>Student Recruitment & Enrollment</li>
+    <li>Payment & Financial Handling</li>
+    <li>Email & Client Communication</li>
+    <li>Team Management & Task Delegation</li>
+    <li>B2B Coordination</li>
+    <li>MS Office & WhatsApp CRM</li>
+    <li>Operations & Documentation Handling</li>
+  </ul>
+</div>
 `
-},
-
+  },
   {
     name: "Ms. Vasudha",
     role: "Senior Consultant - Canada Study Visa",
@@ -213,7 +224,7 @@ Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing i
       ]
     },
     languages: ["English", "Hindi", "Gujarati"],
-    description: "Vasudha's deep understanding of Canadian immigration policies and strong university partnerships have made her the go-to consultant for students aspiring to study in Canada. Her personalized approach ensures each student finds their perfect academic match."
+    description: "Vasudha's deep understanding of Canadian immigration policies and strong university partnerships have made her the go-to consultant for students aspiring to study in Canada."
   },
   {
     name: "Ms. Jashanpreet Kaur",
@@ -231,7 +242,7 @@ Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing i
       ]
     },
     languages: ["English", "Hindi", "Punjabi"],
-    description: "Jashanpreet ensures smooth operations and exceptional client service. Her organizational skills and attention to detail keep the entire team functioning at peak efficiency while maintaining the highest standards of service."
+    description: "Jashanpreet ensures smooth operations and exceptional client service. Her organizational skills and attention to detail keep the entire team functioning at peak efficiency."
   },
   {
     name: "Ms. Anchal Rana",
@@ -249,7 +260,7 @@ Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing i
       ]
     },
     languages: ["English", "Hindi", "Punjabi"],
-    description: "Anchal's expertise in Australian immigration law and education system has made her instrumental in helping students navigate the complex Australian visa process. Her GTE statement preparation is particularly acclaimed."
+    description: "Anchal's expertise in Australian immigration law and education system has made her instrumental in helping students navigate the complex Australian visa process."
   },
   {
     name: "Mr. Supreet Dhamija",
@@ -267,7 +278,7 @@ Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing i
       ]
     },
     languages: ["English", "Hindi", "Punjabi"],
-    description: "Supreet's comprehensive knowledge of the US education system and visa processes has helped countless students achieve their American dream. His interview preparation sessions have an exceptional success rate."
+    description: "Supreet's comprehensive knowledge of the US education system and visa processes has helped countless students achieve their American dream."
   }
 ];
 
@@ -342,9 +353,13 @@ const Team = () => {
               isExpanded={expandedCards[i]}
               onToggle={() => toggleCard(i)}
             />
+            
+            
           </motion.div>
         ))}
+        
       </motion.div>
+      
 
       {/* Company Values Section */}
       <div className="flex flex-col lg:flex-row mt-24 relative z-10 gap-6 max-w-7xl mx-auto">
