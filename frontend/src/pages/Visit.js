@@ -29,7 +29,7 @@ const VisitCounter = () => {
 
     if (!lastVisit || now - parseInt(lastVisit) > 2 * 60 * 60 * 1000) {
       localStorage.setItem("lastVisitTime", now);
-      axios.get("http://localhost:5000/api/public-visit")
+      axios.get("https://myoverseas.onrender.com/api/public-visit")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);
