@@ -50,7 +50,7 @@ const socialIcons = [
     Icon: FaWhatsapp,
     color: "#25D366",
     name: "WhatsApp",
-    link: "https://wa.me/9996140555"
+    link: "https://wa.me/919996140555"
   }
 ];
 
