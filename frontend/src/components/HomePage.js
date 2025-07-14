@@ -178,6 +178,7 @@ export default function HomePage() {
     { path: "/team", label: "Team" },
     {path: "/admin/dashboard", label: "Dashboard"},
     { path: "/admin/login", label: "Login" },
+    {path: "/visit-stats" , label: "Visit Count"}
   ];
 
   return (

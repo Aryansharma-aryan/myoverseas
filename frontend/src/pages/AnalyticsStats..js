@@ -75,7 +75,7 @@ const AnalyticsStats = () => {
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white p-10 rounded-3xl shadow-2xl max-w-[95%] xl:max-w-7xl mx-auto mt-10 border border-yellow-400">
       <h2 className="text-4xl font-extrabold mb-8 text-yellow-400 text-center tracking-wide">
-        📊 Website Visitor Analytics
+        📊 Overall Google Search
       </h2>
 
       <div className="flex justify-center mb-8">

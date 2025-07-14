@@ -6,6 +6,8 @@ const connectDB = require("./db/db");
 const Auth = require("./routes/Auth");
 const consult = require("./routes/consultantRoutes");
 const analyticsRoutes = require("./routes/Analytics"); // ✅ Added
+const visitRoutes = require("./routes/visitCounter");
+
 
 const app = express();
 app.use(express.json());
@@ -38,6 +40,8 @@ connectDB();
 app.use("/api", Auth);
 app.use("/api", consult);
 app.use("/api", analyticsRoutes); // ✅ clean mount
+app.use("/api", visitRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

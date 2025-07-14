@@ -1,4 +1,7 @@
 import AnalyticsSection from '../pages/AnalyticsStats.';
+import Visit from "./Visit"
+
+
 
 
 
@@ -11,6 +14,7 @@ const Dashboard = () => {
         </h1>
 
         <div className="rounded-2xl shadow-xl p-6 bg-gray-800 border border-gray-700 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 ease-in-out">
+          <Visit/>
           <AnalyticsSection />
         </div>
       </div>

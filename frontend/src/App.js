@@ -7,11 +7,16 @@ import {
   useNavigationType,
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 // Regular import only for fallback
 import Loader from './pages/Loader';
+import VisitCounter from "./pages/Visit";
+
+// Inside your <Routes> block:
+
 
 // Lazy-loaded pages/components
 const Footer = lazy(() => import('./components/Footer'));
@@ -66,6 +71,8 @@ function AppWrapper() {
           <Route element={<Layout />}>
             <Route path="/about" element={<AboutSection />} />
             <Route path="/services" element={<ServicesSection />} />
+            <Route path="/visit-stats" element={<VisitCounter/>} />
+
             <Route path="/test-preparation" element={<TestPreparation />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/quote" element={<GetQuote />} />
