@@ -36,7 +36,7 @@ const VisitCounter = () => {
         })
         .catch(err => console.error("Visit counter error:", err.message));
     } else {
-      axios.get("http://localhost:5000/api/public-visit-count-only")
+      axios.get("https://myoverseas.onrender.com/api/public-visit-count-only")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);
