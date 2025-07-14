@@ -18,10 +18,6 @@ import logo from "../assets/vertexlogo.png";
 import hero from "../assets/heroo.png";
 import hero2 from "../assets/hero2.png";
 import hero3 from "../assets/hero3.png";
-// 🖼 Destination images that should appear below the heading
-import canadaImg from "../assets/karanpal.jpeg";      // add this file
-import australiaImg from "../assets/anchal.jpg"; // add this file
-import ukEuImg from "../assets/ukconsult.jpg";       // add this file
 
 // Section Components
 import AboutSection from "../pages/AboutSection";
@@ -54,14 +50,13 @@ const socialIcons = [
     Icon: FaWhatsapp,
     color: "#25D366",
     name: "WhatsApp",
-    link: "https://wa.me/918053555546"
+    link: "https://wa.me/9996140555"
   }
 ];
 
 export default function HomePage() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
 
   // Add custom styles for animations
   useEffect(() => {
@@ -143,15 +138,6 @@ export default function HomePage() {
     "Visa Experts & PR Guidance",
   ];
 
-  const typewriterImages = [
-    null,           // Vertex Study Visa → no image
-    canadaImg,      // Canada → karanpal image
-    australiaImg,   // Australia → anchal image
-    ukEuImg,        // UK/Europe → ukconsult image
-    null,           // Visa Experts → no image
-  ];
-
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typewriterKey, setTypewriterKey] = useState(0);
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
@@ -180,19 +166,6 @@ export default function HomePage() {
       const img = new Image();
       img.src = src;
     });
-  }, []);
-
-  // Track typewriter word changes with more precise timing
-  useEffect(() => {
-    const totalCycleTime = 3000; // Approximate time for each word cycle
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => {
-        const next = (prev + 1) % typewriterWords.length;
-        console.log('Word index changed to:', next, 'Word:', typewriterWords[next]); // Debug log
-        return next;
-      });
-    }, totalCycleTime);
-    return () => clearInterval(interval);
   }, []);
 
   const navLinks = [
@@ -400,146 +373,69 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="flex flex-col items-center justify-center flex-1 px-4 py-8 text-center relative"
           >
-<h2 className="text-[20px] sm:text-[26px] md:text-[32px] lg:text-[38px] xl:text-[42px] font-extrabold mb-4 text-center leading-snug drop-shadow-[2px_2px_5px_rgba(0,0,0,0.6)]">
-  Achieve Your Dream to Study Abroad with
-  <span
-    className="
-      ml-2 inline-block
-      bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500
-      bg-[length:200%_200%] bg-clip-text text-transparent
-      animate-colorShift animate-pulseGlow font-extrabold
-    "
-  >
-    Vertex Study Visa
-  </span>
-</h2>
+            <h2 className="text-[20px] sm:text-[26px] md:text-[32px] lg:text-[38px] xl:text-[42px] font-extrabold mb-4 text-center leading-snug drop-shadow-[2px_2px_5px_rgba(0,0,0,0.6)]">
+              Achieve Your Dream to Study Abroad with
+              <span
+                className="
+                  ml-2 inline-block
+                  bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500
+                  bg-[length:200%_200%] bg-clip-text text-transparent
+                  animate-colorShift animate-pulseGlow font-extrabold
+                "
+              >
+                Vertex Study Visa
+              </span>
+            </h2>
 
-
-
-
-            {/* Main content container with flex layout */}
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-7xl">
-              {/* Left side - Typewriter text */}
-              <div className="flex-1 flex flex-col items-center lg:items-start">
-<h1 className="text-[40px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] via-[#FF7F50] to-white text-center lg:text-left">
-  <AnimatePresence mode="wait">
-    <motion.span
-      key={typewriterKey}
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      transition={{
-        duration: 0.6,
-        ease: [0.25, 0.8, 0.25, 1], // elegant ease
-      }}
-      className="inline-block min-h-[7rem] sm:min-h-[9rem] md:min-h-[11rem]"
-    >
-      <Typewriter
-        words={typewriterWords}
-        loop={Infinity}
-        cursor
-        cursorStyle="|"
-        typeSpeed={50}
-        deleteSpeed={40}
-        delaySpeed={1000}
-        onLoopDone={() => setTypewriterKey(prev => prev + 1)}
-      />
-    </motion.span>
-  </AnimatePresence>
-</h1>
-              </div>
-              
-              {/* Right side - Image card */}
-             <div className="flex-1 flex justify-center lg:justify-end">
-  <AnimatePresence mode="wait">
-    {typewriterImages[currentWordIndex] && (
-      <motion.div
-        key={currentWordIndex}
-        initial={{ opacity: 0, x: 100, scale: 0.8 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        exit={{ opacity: 0, x: -100, scale: 0.8 }}
-        transition={{ duration: 0.6, ease: "easeInOut", type: "spring", stiffness: 100, damping: 20 }}
-        className="relative"
-      >
-        {/* Floating Image Card */}
-        <div className="relative group">
-          {/* Thin Animated glow background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/30 via-green-400/20 to-red-500/30 rounded-2xl blur-lg scale-105 animate-pulse group-hover:blur-xl transition-all duration-700"></div>
-
-          {/* Floating orbs in 3-theme only */}
-          <div className="absolute -top-2 -left-2 w-3 h-3 bg-yellow-400 rounded-full animate-float opacity-80"></div>
-          <div className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-red-400 rounded-full animate-float-delayed opacity-70"></div>
-          <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-green-400 rounded-full animate-float-slow opacity-60"></div>
-          <div className="absolute -bottom-1 -left-3 w-2 h-2 bg-yellow-400 rounded-full animate-float-fast opacity-50"></div>
-
-          {/* Main glass card */}
-          <motion.div
-            whileHover={{ scale: 1.05, rotateY: 5 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-gradient-to-br from-white/10 via-white/5 to-transparent"
-            style={{
-              background: `linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))`,
-              boxShadow: `0 20px 40px -10px rgba(0,0,0,0.4), 0 0 20px rgba(255,200,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05)`,
-            }}
-          >
-            {/* Thin Shimmer border lines */}
-            <div className="absolute inset-0 rounded-2xl">
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-shimmer"></div>
-              <div className="absolute bottom-0 right-0 w-full h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent animate-shimmer-reverse"></div>
-              <div className="absolute top-0 left-0 w-0.5 h-full bg-gradient-to-b from-transparent via-green-400 to-transparent animate-shimmer-vertical"></div>
-              <div className="absolute top-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent animate-shimmer-vertical-reverse"></div>
+            {/* Centered Typewriter text */}
+            <div className="w-full max-w-4xl mx-auto mb-8">
+              <h1 className="text-[40px] sm:text-[50px] md:text-[60px] lg:text-[70px] xl:text-[80px] leading-tight font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] via-[#FF7F50] to-white text-center">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={typewriterKey}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.25, 0.8, 0.25, 1], // elegant ease
+                    }}
+                    className="inline-block min-h-[3rem] sm:min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] xl:min-h-[7rem] flex items-center justify-center"
+                  >
+                    <Typewriter
+                      words={typewriterWords}
+                      loop={Infinity}
+                      cursor
+                      cursorStyle="|"
+                      typeSpeed={50}
+                      deleteSpeed={40}
+                      delaySpeed={1000}
+                      onLoopDone={() => setTypewriterKey(prev => prev + 1)}
+                    />
+                  </motion.span>
+                </AnimatePresence>
+              </h1>
             </div>
 
-            {/* Inner content */}
-            <div className="relative p-4 h-full">
-              <div className="relative w-full h-full">
-                {/* Glow background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-green-400/10 to-red-500/10 rounded-xl blur-md animate-pulse"></div>
+            <p className="text-white text-lg max-w-2xl mb-10 leading-relaxed font-bold drop-shadow-[2px_2px_3px_rgba(0,0,0,0.8)]">
+              We specialize in <span className="text-[#FF6B00] font-extrabold">Study Visas</span>, 
+              <span className="text-[#EAAA00] font-extrabold"> Tourist Visas</span>, and 
+              <span className="text-[#C71585] font-extrabold"> Permanent Residency (PR)</span> guidance.
+            </p>
 
-                {/* Image */}
-                <div className="relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm h-full">
-                  <motion.img
-                    src={typewriterImages[currentWordIndex]}
-                    alt={`${typewriterWords[currentWordIndex]} representative`}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                  />
-
-                  {/* Subtle overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-red-500/5"></div>
-
-                  {/* Glow sparks */}
-                  <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
-                  <div className="absolute bottom-3 left-3 w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
-                  <div className="absolute top-1/2 left-2 w-0.5 h-0.5 bg-green-400 rounded-full animate-bounce"></div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
-
-            </div>
-<p className="text-white text-lg max-w-2xl mb-10 leading-relaxed font-bold mt-6 drop-shadow-[2px_2px_3px_rgba(0,0,0,0.8)]">
-  We specialize in <span className="text-[#FF6B00] font-extrabold">Study Visas</span>, 
-  <span className="text-[#EAAA00] font-extrabold"> Tourist Visas</span>, and 
-  <span className="text-[#C71585] font-extrabold"> Permanent Residency (PR)</span> guidance.
-</p>
-
-
-
-            
             <Link to="/consultant">
-              <button className="relative px-8 py-4 text-white font-semibold text-lg rounded-xl overflow-hidden transition duration-300 hover:scale-105 backdrop-blur-md border border-transparent">
-                <span className="absolute inset-0 rounded-xl p-[2px] bg-[linear-gradient(to_right,_orange_70%,_tomato_85%,_pink)] z-0"></span>
-                <span className="absolute inset-[2px] rounded-[0.75rem] bg-[rgba(255,99,71,0.3)] backdrop-blur-md z-10 shadow-[0_0_10px_2px_rgba(255,99,71,0.5)]"></span>
-                <span className="relative z-20">GET FREE CONSULTATION</span>
-              </button>
+             <button className="relative px-8 py-4 text-white font-semibold text-lg rounded-xl overflow-hidden transition duration-300 hover:scale-105 backdrop-blur-md border border-transparent group">
+  
+  {/* Outer gradient border with subtle animated glow */}
+  <span className="absolute inset-0 rounded-xl p-[2px] bg-[linear-gradient(to_right,_orange_70%,_tomato_85%,_pink)] z-0 animate-pulse"></span>
+  
+  {/* Inner background with smooth glow effect on hover */}
+  <span className="absolute inset-[2px] rounded-[0.75rem] bg-[rgba(255,99,71,0.3)] backdrop-blur-md z-10 shadow-[0_0_10px_2px_rgba(255,99,71,0.5)] group-hover:shadow-[0_0_20px_5px_rgba(255,99,71,0.7)] transition-all duration-300"></span>
+  
+  {/* Text animation on hover */}
+  <span className="relative z-20 transition-transform duration-300 group-hover:scale-110 group-hover:text-yellow-300">GET FREE CONSULTATION</span>
+</button>
+
             </Link>
           </motion.section>
         </div>

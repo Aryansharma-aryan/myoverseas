@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import team1 from "../assets/karanpal.jpeg";
+import ukConsult from "../assets/ukconsult.jpg";
 import team2 from "../assets/vasundha.jpeg";
 import team3 from "../assets/supreet.jpeg";
 import Australia from "../assets/anchal.jpg";
-import ukConsult from "../assets/ukconsult.jpg";
+
 import jashanpreet from "../assets/jashanpreet.jpg"
 
 import { 
@@ -149,6 +150,53 @@ const members = [
     languages: ["English", "Hindi", "Punjabi"],
     description: "With extensive experience in tourist visa operations, Karanpal has helped thousands of families reunite and explore the world. His expertise in handling complex cases and embassy relations makes him invaluable for challenging applications."
   },
+{
+    name: "Ms. Kajal Rana",
+    role: "Senior Consultant - UK Study Visa",
+    image: ukConsult,
+    experience: "5+ Years",
+    specialties: ["UK Student Route", "CAS Processing", "Tier 4 Visa", "Graduate Route"],
+    achievements: {
+      successRate: "93%",
+      details: [
+        "Successfully processed 1000+ UK student visas",
+        "Expert in Student Route applications post-Brexit",
+        "Specialized in Russell Group university applications",
+        "Guided students through Graduate Route transitions"
+      ]
+    },
+    languages: ["English", "Hindi", "Punjabi"],
+    description: `
+Ms. Kajal Rana is a highly experienced UK Student Visa Consultant specializing in student recruitment and visa counseling with a proven success rate of 93%.
+
+✅ **Key Responsibilities:**
+• Counseling students for UK study visas and guiding them throughout the admission and visa process.  
+• Filing UK student visa applications independently (UKVI portal).  
+• Managing payments including tuition fees, IHS, and visa fees.  
+• Coordinating with universities, students, and B2B agents.  
+• Handling student recruitment, enrollment, and screening for UK universities.  
+• Managing team operations, assigning tasks, and ensuring smooth workflow.  
+• Responding to student and partner queries via email, calls, and WhatsApp.  
+• Taking care of documentation: CAS, SOPs, financials, TB reports, etc.  
+• Maintaining office records, follow-ups, and operational reporting.  
+• Supporting marketing campaigns, content creation, and outreach.  
+
+🎓 **Education:**  
+- Master of Arts in English – IGNOU (2022) – 66%  
+- Bachelor of Science (Chemistry) – Himachal Pradesh University (2017) – 72%  
+
+💻 **Skills:**  
+- UK Student Visa Filing & Counseling  
+- Student Recruitment & Enrollment  
+- Payment & Financial Handling  
+- Email & Client Communication  
+- Team Management & Task Delegation  
+- B2B Coordination  
+- MS Office & WhatsApp CRM  
+- Operations & Documentation Handling
+`
+},
+
   {
     name: "Ms. Vasudha",
     role: "Senior Consultant - Canada Study Visa",
@@ -166,24 +214,6 @@ const members = [
     },
     languages: ["English", "Hindi", "Gujarati"],
     description: "Vasudha's deep understanding of Canadian immigration policies and strong university partnerships have made her the go-to consultant for students aspiring to study in Canada. Her personalized approach ensures each student finds their perfect academic match."
-  },
-  {
-    name: "Mr. Supreet Dhamija",
-    role: "Senior Consultant - USA Study Visa",
-    image: team3,
-    experience: "7+ Years",
-    specialties: ["USA F1 Visa", "University Selection", "Visa Interview Prep", "Scholarship Guidance"],
-    achievements: {
-      successRate: "92%",
-      details: [
-        "Guided 1200+ students to US universities",
-        "Expert in F1 visa interview preparation",
-        "Secured $2M+ in scholarships for students",
-        "Specialized in STEM program applications"
-      ]
-    },
-    languages: ["English", "Hindi", "Punjabi"],
-    description: "Supreet's comprehensive knowledge of the US education system and visa processes has helped countless students achieve their American dream. His interview preparation sessions have an exceptional success rate."
   },
   {
     name: "Ms. Jashanpreet Kaur",
@@ -204,7 +234,7 @@ const members = [
     description: "Jashanpreet ensures smooth operations and exceptional client service. Her organizational skills and attention to detail keep the entire team functioning at peak efficiency while maintaining the highest standards of service."
   },
   {
-    name: "Ms. Anchal Sharma",
+    name: "Ms. Anchal Rana",
     role: "Senior Consultant - Australia Study Visa",
     image: Australia,
     experience: "6+ Years",
@@ -222,22 +252,22 @@ const members = [
     description: "Anchal's expertise in Australian immigration law and education system has made her instrumental in helping students navigate the complex Australian visa process. Her GTE statement preparation is particularly acclaimed."
   },
   {
-    name: "Ms. Kajal Rana",
-    role: "Senior Consultant - UK Study Visa",
-    image: ukConsult,
-    experience: "5+ Years",
-    specialties: ["UK Student Route", "CAS Processing", "Tier 4 Visa", "Graduate Route"],
+    name: "Mr. Supreet Dhamija",
+    role: "Senior Consultant - USA Study Visa",
+    image: team3,
+    experience: "7+ Years",
+    specialties: ["USA F1 Visa", "University Selection", "Visa Interview Prep", "Scholarship Guidance"],
     achievements: {
-      successRate: "93%",
+      successRate: "92%",
       details: [
-        "Successfully processed 1000+ UK student visas",
-        "Expert in Student Route applications post-Brexit",
-        "Specialized in Russell Group university applications",
-        "Guided students through Graduate Route transitions"
+        "Guided 1200+ students to US universities",
+        "Expert in F1 visa interview preparation",
+        "Secured $2M+ in scholarships for students",
+        "Specialized in STEM program applications"
       ]
     },
     languages: ["English", "Hindi", "Punjabi"],
-    description: "Kajal's deep understanding of post-Brexit UK immigration rules and strong connections with UK universities make her the ideal consultant for students seeking quality British education. Her guidance has helped students secure places at top UK institutions."
+    description: "Supreet's comprehensive knowledge of the US education system and visa processes has helped countless students achieve their American dream. His interview preparation sessions have an exceptional success rate."
   }
 ];
 
