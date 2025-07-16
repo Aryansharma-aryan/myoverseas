@@ -31,4 +31,10 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ✅ Add this favicon entry -->
+  <url>
+    <loc>https://www.vertexstudyvisa.com/favicon.ico</loc>
+    <priority>0.1</priority>
+  </url>
+
 </urlset>
