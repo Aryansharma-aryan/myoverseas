@@ -1,9 +1,15 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+// components/ProtectedRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-export default function ProtectedRoute({ children }) {
-  const token = localStorage.getItem("adminToken");
+const ProtectedRoute = ({ children }) => {
+  const isAdmin = localStorage.getItem('isAdmin'); // or check a token
 
-  if (!token) return <Navigate to="/admin/login" replace />;
-  return children;
-}
+  if (isAdmin === 'true') {
+    return children;
+  } else {
+    return <Navigate to="/admin/login" replace />;
+  }
+};
+
+export default ProtectedRoute;

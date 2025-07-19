@@ -1,22 +1,17 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
-  useNavigationType,
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Regular import only for fallback
+// Fallback loader for lazy loading
 import Loader from './pages/Loader';
-import VisitCounter from "./pages/Visit";
-
-// Inside your <Routes> block:
-
+import VisitCounter from './pages/Visit';
 
 // Lazy-loaded pages/components
 const Footer = lazy(() => import('./components/Footer'));
@@ -37,27 +32,14 @@ const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 
 function AppWrapper() {
   const location = useLocation();
-  const navigationType = useNavigationType();
-  const [routeLoading, setRouteLoading] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 800 });
   }, []);
 
-  useEffect(() => {
-    if (navigationType === 'PUSH' || navigationType === 'POP') {
-      setRouteLoading(true);
-      const timer = setTimeout(() => {
-        setRouteLoading(false);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [location]);
-
-  if (routeLoading) return <Loader />;
-
   return (
     <motion.div
+      key={location.pathname}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -66,20 +48,28 @@ function AppWrapper() {
     >
       <Suspense fallback={<Loader />}>
         <Routes>
-          {/* Public routes */}
+          {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
           <Route element={<Layout />}>
             <Route path="/about" element={<AboutSection />} />
             <Route path="/services" element={<ServicesSection />} />
-            <Route path="/visit-stats" element={<VisitCounter/>} />
-
+            <Route path="/visit-stats" element={<VisitCounter />} />
             <Route path="/test-preparation" element={<TestPreparation />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/quote" element={<GetQuote />} />
             <Route path="/consultant" element={<GetConsultant />} />
             <Route path="/faq" element={<ConsultationSection />} />
             <Route path="/team" element={<Team />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+
+            {/* Protected Admin Routes */}
+            <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/admin/consultants"
               element={
@@ -90,7 +80,7 @@ function AppWrapper() {
             />
           </Route>
 
-          {/* Admin login WITHOUT layout */}
+          {/* Admin Login (No Layout) */}
           <Route path="/admin/login" element={<Login />} />
         </Routes>
 

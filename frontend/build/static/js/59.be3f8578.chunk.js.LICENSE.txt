@@ -1,6 +1,8 @@
+/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
+
 /**
  * @license React
- * react-dom-client.production.js
+ * react-is.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -10,7 +12,7 @@
 
 /**
  * @license React
- * react-dom.production.js
+ * use-sync-external-store-shim.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -20,7 +22,7 @@
 
 /**
  * @license React
- * react-jsx-runtime.production.js
+ * use-sync-external-store-shim/with-selector.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -30,17 +32,7 @@
 
 /**
  * @license React
- * react.production.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/**
- * @license React
- * scheduler.production.js
+ * use-sync-external-store-with-selector.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
