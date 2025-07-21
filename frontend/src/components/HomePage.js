@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import Dashboard from "../pages/Dashboard"
+
 
 import {
   FaFacebookF,
@@ -443,7 +443,7 @@ export default function HomePage() {
       </div>
 
       {/* Section Stack */}
-      {[AboutSection, WhyChooseVertex, ServicesSection, FounderSection, GuidanceSection, CountriesWeServe, TestPreparation, Team, SuccessStory,Dashboard, ConsultationSection].map((Section, i) => (
+      {[AboutSection, WhyChooseVertex, ServicesSection, FounderSection, GuidanceSection, CountriesWeServe, TestPreparation, Team, SuccessStory, ConsultationSection].map((Section, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, y: 40 }}
