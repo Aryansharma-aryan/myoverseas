@@ -1,19 +1,45 @@
-# Ignore dependencies and cache
+# -----------------------------
+# Node & React Dependencies
+# -----------------------------
 node_modules/
-.cache/
 frontend/node_modules/
-frontend/.cache/
 backend/node_modules/
-backend/.cache/
 
-# Misc
+# -----------------------------
+# Build & Cache Files
+# -----------------------------
+frontend/build/
+frontend/.cache/
+backend/.cache/
+.cache/
+dist/
+coverage/
+
+# -----------------------------
+# Environment & Config
+# -----------------------------
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+
+# -----------------------------
+# OS Generated Files
+# -----------------------------
 .DS_Store
 Thumbs.db
 
-# Secrets
-backend/google/analytics-key.json
-backend/.env
-.env
+# -----------------------------
+# Logs
+# -----------------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
+# -----------------------------
+# Secrets & Keys
+# -----------------------------
 backend/google/analytics-key.json
