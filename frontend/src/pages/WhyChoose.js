@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import whyImage from "../assets/banner.png"; // keep the image same
+import { Link } from "react-router-dom";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -80,13 +81,15 @@ export default function WhyChooseVertex() {
             ))}
           </motion.ul>
 
-          <motion.button
-            className="mt-10 bg-gradient-to-r from-yellow-400 to-orange-300 hover:from-yellow-300 hover:to-orange-200 text-black font-semibold px-8 py-3 rounded-md shadow-lg shadow-yellow-400/30 transition duration-300"
-            variants={fadeInUp}
-            custom={8}
-          >
-            KNOW MORE
-          </motion.button>
+         <Link to="/services">
+  <motion.button
+    className="mt-10 bg-gradient-to-r from-yellow-400 to-orange-300 hover:from-yellow-300 hover:to-orange-200 text-black font-semibold px-8 py-3 rounded-md shadow-lg shadow-yellow-400/30 transition duration-300"
+    variants={fadeInUp}
+    custom={8}
+  >
+    KNOW MORE
+  </motion.button>
+</Link>
         </motion.div>
 
         {/* Right: Image with flip effect */}
