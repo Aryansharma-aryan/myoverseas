@@ -81,7 +81,7 @@ export default function WhyChooseVertex() {
             ))}
           </motion.ul>
 
-         <Link to="/services">
+         <Link to="/consultant">
   <motion.button
     className="mt-10 bg-gradient-to-r from-yellow-400 to-orange-300 hover:from-yellow-300 hover:to-orange-200 text-black font-semibold px-8 py-3 rounded-md shadow-lg shadow-yellow-400/30 transition duration-300"
     variants={fadeInUp}
