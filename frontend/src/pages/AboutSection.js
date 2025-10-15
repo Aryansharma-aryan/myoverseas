@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
+import { Link } from "react-router-dom";
+
 import {
   FaPlaneDeparture,
   FaUserGraduate,
@@ -55,9 +57,12 @@ export default function AboutSection() {
           <p className="text-base md:text-lg text-gray-700 mb-8 leading-relaxed font-[Poppins]">
             At Vertex Study Visa, we are passionate about helping students and professionals achieve their global ambitions. With years of experience and a highly qualified team, we provide personalized visa consultation, documentation support, and language training. We believe in transparent service, ethical guidance, and long-term success for our clients.
           </p>
-          <button className="bg-[#0a1f3c] text-white px-6 py-3 rounded-xl hover:bg-[#132b47] transition-all duration-300 shadow-lg font-[Poppins]">
-            START YOUR VISA JOURNEY TODAY
-          </button>
+         <Link
+  to="/services"
+  className="bg-[#0a1f3c] text-white px-6 py-3 rounded-xl hover:bg-[#132b47] transition-all duration-300 shadow-lg font-[Poppins]"
+>
+  START YOUR VISA JOURNEY TODAY
+</Link>
         </motion.div>
 
         {/* RIGHT Stat Cards */}
