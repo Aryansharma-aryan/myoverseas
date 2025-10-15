@@ -63,9 +63,12 @@ const GuidanceSection = () => {
             walk with you through the entire process. From counseling to final
             approval, our team ensures you’re confident, informed, and visa-ready.
           </p>
-          <button className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-400 text-black font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105">
-            Get Free Consultation
-          </button>
+          <a href="/consultant">
+  <button className="bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-500 hover:to-pink-400 text-black font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105">
+    Get Free Consultation
+  </button>
+</a>
+
         </motion.div>
 
         {/* Right Card */}
