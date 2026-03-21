@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -150,7 +150,7 @@ export default function HomePage() {
     setIsAdmin(!!token); // Set admin state based on token presence
   }, []);
 
-  const backgroundImages = [hero, hero2, hero3];
+const backgroundImages = useMemo(() => [hero, hero2, hero3], []);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 useEffect(() => {
   const interval = setInterval(() => {
