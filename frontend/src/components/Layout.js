@@ -16,7 +16,7 @@ const Layout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
   const isHome = location.pathname === "/";
-  const [isAdmin, setIsAdmin] = useState(
+  const [isAdmin] = useState(
     localStorage.getItem("adminToken") ? true : false
   );
 

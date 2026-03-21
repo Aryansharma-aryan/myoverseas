@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Layout from "../"
 
 const AllConsultants = () => {
   const [consultants, setConsultants] = useState([]);
