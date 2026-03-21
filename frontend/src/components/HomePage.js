@@ -30,7 +30,6 @@ import TestPreparation from "../pages/TestPrepration";
 import SuccessStory from "../pages/SuccessStory";
 import ConsultationSection from "../pages/Faq";
 import Team from "../pages/Team";
-import { TfiDashboard } from "react-icons/tfi";
 import { FaWhatsapp } from "react-icons/fa";
 
 const socialIcons = [
@@ -153,20 +152,21 @@ export default function HomePage() {
 
   const backgroundImages = [hero, hero2, hero3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
+  }, 4000);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  return () => clearInterval(interval);
+}, [backgroundImages.length]); // ✅ added dependency
 
-  useEffect(() => {
-    backgroundImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
+
+useEffect(() => {
+  backgroundImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}, [backgroundImages]); // ✅ added dependency
 
   const navLinks = [
     { path: "/", label: "Home" },
