@@ -2,10 +2,6 @@
 
   "dependencies": {
 
-    "@react-three/drei": "^10.4.2",
-
-    "@react-three/fiber": "^9.2.0",
-
     "@testing-library/dom": "^10.4.0",
 
     "@testing-library/jest-dom": "^6.6.3",
