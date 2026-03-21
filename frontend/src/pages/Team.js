@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import team1 from "../assets/karanpal.jpeg";
-import ukConsult from "../assets/ukconsult.jpg";
+import ukConsult from "../assets/jagdeepuk.jpeg";
 import team2 from "../assets/vasundha.jpeg";
 import team3 from "../assets/supreet.jpeg";
 import Australia from "../assets/anchal.jpg";
@@ -155,8 +155,8 @@ const members = [
     description: "With extensive experience in tourist visa operations, Karanpal has helped thousands of families reunite and explore the world. His expertise in handling complex cases and embassy relations makes him invaluable for challenging applications."
   },
   {
-    name: "Ms. Kajal Rana",
-    role: "Senior Consultant - UK Study Visa",
+    name: "Jagdeep Kaur",
+    role: "Senior Uk Counsellor - UK Study Visa",
     image: ukConsult,
     experience: "5+ Years",
     specialties: ["UK Student Route", "CAS Processing", "Tier 4 Visa", "Graduate Route"],

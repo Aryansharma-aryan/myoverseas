@@ -23,7 +23,7 @@ const FounderSection = () => {
           />
           
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            Gurbaj Singh Sarpanch
+            Gurbaj Singh 
           </h2>
           <p className="text-sm text-amber-400 font-medium mb-6 flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
@@ -122,17 +122,7 @@ const FounderSection = () => {
                 </h5>
               </div>
               
-              {/* Certificate Details Grid */}
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="bg-black/40 rounded-xl p-4 border border-amber-400/30 text-center">
-                  <p className="text-amber-400 font-semibold text-sm mb-1">Issue Date</p>
-                  <p className="text-white font-bold text-lg">04/11/2025</p>
-                </div>
-                <div className="bg-black/40 rounded-xl p-4 border border-amber-400/30 text-center">
-                  <p className="text-amber-400 font-semibold text-sm mb-1">Valid Until</p>
-                  <p className="text-white font-bold text-lg">04/11/2026</p>
-                </div>
-              </div>
+           
 
               {/* View Larger Button */}
               <button
@@ -145,12 +135,6 @@ const FounderSection = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="text-center lg:text-left">
-            <button className="bg-gradient-to-r from-amber-400 to-rose-500 hover:from-amber-500 hover:to-pink-600 text-black font-bold py-4 px-10 rounded-full shadow-2xl hover:shadow-amber-400/50 transition-all duration-300 hover:scale-110 transform">
-              Learn More About Our Founder
-            </button>
-          </div>
         </div>
       </div>
 
@@ -204,27 +188,7 @@ const FounderSection = () => {
                 </div>
               </div>
               
-              {/* Footer with Verification Details */}
-              <div className="px-8 pb-8 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-                <div className="bg-gradient-to-r from-amber-400/10 via-rose-400/10 to-purple-400/10 rounded-2xl p-6 border-2 border-amber-400/40 shadow-2xl">
-                  <div className="grid md:grid-cols-3 gap-6 text-center">
-                    <div>
-                      <p className="text-amber-400 font-bold mb-2 text-sm">Issue Date</p>
-                      <p className="text-white font-bold text-xl">04/11/2025</p>
-                    </div>
-                    <div>
-                      <p className="text-amber-400 font-bold mb-2 text-sm">Valid Until</p>
-                      <p className="text-white font-bold text-xl">04/11/2026</p>
-                    </div>
-                    <div>
-                      <p className="text-amber-400 font-bold mb-2 text-xs">Verification Code</p>
-                      <p className="text-gray-300 font-mono text-[9px] break-all bg-black/50 rounded-lg p-2 border border-amber-400/20">
-                        cae46ab1-8296-42b7-bafd-bfd672414996
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
