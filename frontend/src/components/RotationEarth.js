@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars, useTexture } from "@react-three/drei";
-import * as THREE from "three";
 
 const Earth = () => {
   const earthMap = useTexture("/earthmap.jpg"); // Place image in public/ folder
