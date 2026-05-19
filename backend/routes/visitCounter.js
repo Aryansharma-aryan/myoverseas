@@ -1,62 +1,113 @@
 const express = require("express");
-const Visit = require("../models/Visit");
 const moment = require("moment");
+const Visit = require("../models/Visit");
 
 const router = express.Router();
 
-// This route increases count and logs visit
+const getVisitStats = (doc) => {
+  if (!doc) {
+    return {
+      visits: 0,
+      last24h: 0,
+      last7d: 0,
+      last30d: 0,
+      clicks: 0,
+      clicks24h: 0,
+      clicks7d: 0,
+      clicks30d: 0,
+    };
+  }
+
+  const logs = doc.logs || [];
+  const clickLogs = doc.clickLogs || [];
+
+  return {
+    visits: doc.count || 0,
+    last24h: logs.filter((d) => moment(d).isAfter(moment().subtract(24, "hours"))).length,
+    last7d: logs.filter((d) => moment(d).isAfter(moment().subtract(7, "days"))).length,
+    last30d: logs.filter((d) => moment(d).isAfter(moment().subtract(30, "days"))).length,
+    clicks: doc.clickCount || 0,
+    clicks24h: clickLogs.filter((item) => moment(item.at).isAfter(moment().subtract(24, "hours"))).length,
+    clicks7d: clickLogs.filter((item) => moment(item.at).isAfter(moment().subtract(7, "days"))).length,
+    clicks30d: clickLogs.filter((item) => moment(item.at).isAfter(moment().subtract(30, "days"))).length,
+  };
+};
+
 router.get("/public-visit", async (req, res) => {
   try {
-    let doc = await Visit.findOne();
     const now = new Date();
+    let doc = await Visit.findOne();
 
     if (!doc) {
       doc = await Visit.create({
         count: 1,
-        logs: [now]
+        logs: [now],
+        clickCount: 0,
+        clickLogs: [],
       });
     } else {
-      doc.count += 1;
+      doc.count = (doc.count || 0) + 1;
       doc.logs.push(now);
+
+      if (doc.logs.length > 10000) {
+        doc.logs = doc.logs.slice(-10000);
+      }
+
       await doc.save();
     }
 
-    const last24h = doc.logs.filter(d => moment(d).isAfter(moment().subtract(24, 'hours'))).length;
-    const last7d = doc.logs.filter(d => moment(d).isAfter(moment().subtract(7, 'days'))).length;
-    const last30d = doc.logs.filter(d => moment(d).isAfter(moment().subtract(30, 'days'))).length;
-
-    res.json({
-      visits: doc.count,
-      last24h,
-      last7d,
-      last30d,
-    });
+    res.json(getVisitStats(doc));
   } catch (error) {
-    console.error("❌ Visit route error:", error.message);
+    console.error("Visit route error:", error.message);
     res.status(500).json({ error: "Failed to update visit count" });
   }
 });
 
-// This route only fetches stats (no increment)
 router.get("/public-visit-count-only", async (req, res) => {
   try {
     const doc = await Visit.findOne();
+    res.json(getVisitStats(doc));
+  } catch (error) {
+    console.error("Visit stats error:", error.message);
+    res.status(500).json({ error: "Failed to fetch visit stats" });
+  }
+});
+
+router.post("/track-click", async (req, res) => {
+  try {
+    const { path = "/", label = "Unknown click", element = "unknown" } = req.body || {};
+    const now = new Date();
+    let doc = await Visit.findOne();
+
+    const clickLog = {
+      at: now,
+      path: String(path).slice(0, 200),
+      label: String(label).slice(0, 160),
+      element: String(element).slice(0, 40),
+    };
+
     if (!doc) {
-      return res.json({ visits: 0, last24h: 0, last7d: 0, last30d: 0 });
+      doc = await Visit.create({
+        count: 0,
+        logs: [],
+        clickCount: 1,
+        clickLogs: [clickLog],
+      });
+    } else {
+      doc.clickCount = (doc.clickCount || 0) + 1;
+      doc.clickLogs.push(clickLog);
+
+      if (doc.clickLogs.length > 5000) {
+        doc.clickLogs = doc.clickLogs.slice(-5000);
+      }
+
+      await doc.save();
     }
 
-    const last24h = doc.logs.filter(d => moment(d).isAfter(moment().subtract(24, 'hours'))).length;
-    const last7d = doc.logs.filter(d => moment(d).isAfter(moment().subtract(7, 'days'))).length;
-    const last30d = doc.logs.filter(d => moment(d).isAfter(moment().subtract(30, 'days'))).length;
-
-    res.json({
-      visits: doc.count,
-      last24h,
-      last7d,
-      last30d,
-    });
+    res.status(201).json(getVisitStats(doc));
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch visit stats" });
+    console.error("Click tracking error:", error.message);
+    res.status(500).json({ error: "Failed to track click" });
   }
 });
 

@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../api";
 import CountUp from "react-countup";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
 import { Doughnut } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
   ArcElement,
-  Tooltip as ChartTooltip,
+  Chart as ChartJS,
   Legend as ChartLegend,
+  Tooltip as ChartTooltip,
 } from "chart.js";
+import { api } from "../api";
 
 ChartJS.register(ArcElement, ChartTooltip, ChartLegend);
 
+const emptyAnalytics = {
+  today: 0,
+  last7days: 0,
+  last30days: 0,
+  totalVisitors: 0,
+  clicks: 0,
+  clicks24h: 0,
+  clicks7d: 0,
+  clicks30d: 0,
+  source: "website",
+};
+
 const AnalyticsStats = () => {
-  const [analytics, setAnalytics] = useState({
-    today: 0,
-    last7days: 0,
-    last30days: 0,
-  });
+  const [analytics, setAnalytics] = useState(emptyAnalytics);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -35,10 +43,10 @@ const AnalyticsStats = () => {
     setError("");
     try {
       const response = await api.get("/api/analytics");
-      setAnalytics(response.data);
+      setAnalytics({ ...emptyAnalytics, ...response.data });
     } catch (err) {
       console.error("Error fetching analytics:", err);
-      setError("❌ Failed to fetch analytics data.");
+      setError("Analytics data could not be loaded. Please refresh again.");
     } finally {
       setLoading(false);
     }
@@ -49,85 +57,109 @@ const AnalyticsStats = () => {
   }, []);
 
   const chartData = [
-    { name: "Today", Users: parseInt(analytics.today || 0) },
-    { name: "Last 7 Days", Users: parseInt(analytics.last7days || 0) },
-    { name: "Last 30 Days", Users: parseInt(analytics.last30days || 0) },
+    { name: "24 Hours", Visitors: Number(analytics.today || 0) },
+    { name: "7 Days", Visitors: Number(analytics.last7days || 0) },
+    { name: "30 Days", Visitors: Number(analytics.last30days || 0) },
   ];
 
   const doughnutData = {
-    labels: ["Today", "Last 7 Days", "Last 30 Days"],
+    labels: ["24 Hours", "7 Days", "30 Days"],
     datasets: [
       {
         label: "Visitors",
         data: [
-          parseInt(analytics.today || 0),
-          parseInt(analytics.last7days || 0),
-          parseInt(analytics.last30days || 0),
+          Number(analytics.today || 0),
+          Number(analytics.last7days || 0),
+          Number(analytics.last30days || 0),
         ],
-        backgroundColor: ["#facc15", "#ef4444", "#22c55e"], // yellow, red, green
+        backgroundColor: ["#facc15", "#ef4444", "#22c55e"],
         borderColor: "#0f172a",
         borderWidth: 1,
-        cutout: "80%", // Thin ring
+        cutout: "78%",
       },
     ],
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white p-10 rounded-3xl shadow-2xl max-w-[95%] xl:max-w-7xl mx-auto mt-10 border border-yellow-400">
-      <h2 className="text-4xl font-extrabold mb-8 text-yellow-400 text-center tracking-wide">
-        📊 Overall Google Search
+    <div className="mx-auto mt-10 max-w-[95%] rounded-3xl border border-yellow-400 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] p-6 text-white shadow-2xl xl:max-w-7xl lg:p-10">
+      <h2 className="mb-3 text-center text-3xl font-extrabold tracking-wide text-yellow-400 lg:text-4xl">
+        Website Analytics
       </h2>
+      <p className="mb-8 text-center text-sm text-slate-300">
+        Source: {analytics.source === "google" ? "Google Analytics + website tracker" : "Website tracker"}
+      </p>
 
-      <div className="flex justify-center mb-8">
+      <div className="mb-8 flex justify-center">
         <button
           onClick={fetchAnalytics}
-          className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-6 py-2 rounded-full shadow-md transition-all duration-300"
+          className="rounded-full bg-yellow-400 px-6 py-2 font-semibold text-black shadow-md transition-all duration-300 hover:bg-yellow-300"
         >
-          🔁 Refresh
+          Refresh
         </button>
       </div>
 
       {loading ? (
         <p className="text-center text-gray-300">Loading...</p>
       ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
+        <p className="text-center text-red-400">{error}</p>
       ) : (
         <>
-          {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-10">
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-yellow-400">
-              <p className="text-lg mb-2">👁️ <strong>Today</strong></p>
+          <div className="mb-10 grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
+            <div className="rounded-xl border-l-4 border-yellow-400 bg-gray-800 p-6 shadow-lg">
+              <p className="mb-2 text-lg font-semibold">Last 24 Hours</p>
               <p className="text-3xl font-extrabold text-yellow-300">
-                <CountUp end={parseInt(analytics.today)} duration={1.2} separator="," />
+                <CountUp end={Number(analytics.today || 0)} duration={1.2} separator="," />
               </p>
             </div>
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-red-500">
-              <p className="text-lg mb-2">📆 <strong>Last 7 Days</strong></p>
+            <div className="rounded-xl border-l-4 border-red-500 bg-gray-800 p-6 shadow-lg">
+              <p className="mb-2 text-lg font-semibold">Last 7 Days</p>
               <p className="text-3xl font-extrabold text-red-400">
-                <CountUp end={parseInt(analytics.last7days)} duration={1.4} separator="," />
+                <CountUp end={Number(analytics.last7days || 0)} duration={1.4} separator="," />
               </p>
             </div>
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-              <p className="text-lg mb-2">🗓️ <strong>Last 30 Days</strong></p>
+            <div className="rounded-xl border-l-4 border-green-500 bg-gray-800 p-6 shadow-lg">
+              <p className="mb-2 text-lg font-semibold">Last 30 Days</p>
               <p className="text-3xl font-extrabold text-green-400">
-                <CountUp end={parseInt(analytics.last30days)} duration={1.6} separator="," />
+                <CountUp end={Number(analytics.last30days || 0)} duration={1.6} separator="," />
               </p>
             </div>
           </div>
 
-          {/* Charts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* Thin Doughnut Chart */}
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-center text-white">Visitors Distribution</h3>
-              <div className="w-full sm:w-4/5 mx-auto">
+          <div className="mb-10 grid grid-cols-1 gap-6 text-center sm:grid-cols-4">
+            <div className="rounded-xl border border-cyan-500/30 bg-gray-800 p-5 shadow-lg">
+              <p className="mb-2 text-sm text-gray-300">Total Visitors</p>
+              <p className="text-2xl font-extrabold text-cyan-300">
+                <CountUp end={Number(analytics.totalVisitors || 0)} duration={1.2} separator="," />
+              </p>
+            </div>
+            <div className="rounded-xl border border-pink-500/30 bg-gray-800 p-5 shadow-lg">
+              <p className="mb-2 text-sm text-gray-300">Total Clicks</p>
+              <p className="text-2xl font-extrabold text-pink-300">
+                <CountUp end={Number(analytics.clicks || 0)} duration={1.2} separator="," />
+              </p>
+            </div>
+            <div className="rounded-xl border border-pink-500/30 bg-gray-800 p-5 shadow-lg">
+              <p className="mb-2 text-sm text-gray-300">Clicks Last 24 Hours</p>
+              <p className="text-2xl font-extrabold text-pink-300">{analytics.clicks24h || 0}</p>
+            </div>
+            <div className="rounded-xl border border-pink-500/30 bg-gray-800 p-5 shadow-lg">
+              <p className="mb-2 text-sm text-gray-300">Clicks 7D / 30D</p>
+              <p className="text-2xl font-extrabold text-pink-300">
+                {analytics.clicks7d || 0} / {analytics.clicks30d || 0}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            <div className="rounded-xl border border-gray-700 bg-gray-800 p-6 shadow-lg">
+              <h3 className="mb-4 text-center text-xl font-semibold text-white">Visitor Distribution</h3>
+              <div className="mx-auto w-full sm:w-4/5">
                 <Doughnut data={doughnutData} />
               </div>
             </div>
 
-            {/* Bar Chart */}
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-center text-white">Bar Chart Overview</h3>
+            <div className="rounded-xl border border-gray-700 bg-gray-800 p-6 shadow-lg">
+              <h3 className="mb-4 text-center text-xl font-semibold text-white">Visitor Trend</h3>
               <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -135,7 +167,7 @@ const AnalyticsStats = () => {
                   <YAxis stroke="#cbd5e1" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="Users" fill="#facc15" barSize={40} radius={[10, 10, 0, 0]} />
+                  <Bar dataKey="Visitors" fill="#facc15" barSize={40} radius={[10, 10, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

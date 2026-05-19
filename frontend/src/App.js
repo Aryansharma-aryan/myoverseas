@@ -8,6 +8,7 @@ import {
 import { motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { api } from './api';
 
 // Fallback loader for lazy loading
 import Loader from './pages/Loader';
@@ -30,6 +31,50 @@ const Login = lazy(() => import('./pages/Login'));
 const AllConsultants = lazy(() => import('./pages/AllConsultants'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 
+function WebsiteTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const lastVisit = localStorage.getItem("lastVisitTime");
+    const now = Date.now();
+
+    if (!lastVisit || now - Number(lastVisit) > 2 * 60 * 60 * 1000) {
+      localStorage.setItem("lastVisitTime", String(now));
+      api.get("/api/public-visit").catch((error) => {
+        console.error("Visit tracking error:", error.message);
+      });
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      const clickedElement =
+        event.target instanceof Element ? event.target : event.target?.parentElement;
+      const target = clickedElement?.closest("a, button, input, textarea, select, [role='button']");
+      const element = target?.tagName?.toLowerCase() || clickedElement?.tagName?.toLowerCase() || "unknown";
+      const label =
+        target?.innerText?.trim() ||
+        target?.getAttribute?.("aria-label") ||
+        target?.getAttribute?.("placeholder") ||
+        target?.getAttribute?.("href") ||
+        "Website click";
+
+      api
+        .post("/api/track-click", {
+          path: window.location.pathname,
+          label,
+          element,
+        })
+        .catch(() => {});
+    };
+
+    document.addEventListener("click", handleClick, true);
+    return () => document.removeEventListener("click", handleClick, true);
+  }, []);
+
+  return null;
+}
+
 function AppWrapper() {
   const location = useLocation();
 
@@ -51,6 +96,7 @@ function AppWrapper() {
       transition={{ duration: 0.35 }}
       className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white min-h-screen font-[Poppins]"
     >
+      <WebsiteTracker />
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* Public Routes */}

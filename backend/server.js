@@ -40,13 +40,7 @@ connectDB();
 // ✅ Routes
 app.use("/api", Auth);
 app.use("/api", consult);
-
-if (process.env.GA4_PROPERTY_ID && process.env.GA_CREDENTIALS_BASE64) {
-  app.use("/api", analyticsRoutes);
-} else {
-  console.warn("⚠️ Analytics route disabled: GA env vars are not configured.");
-}
-
+app.use("/api", analyticsRoutes);
 app.use("/api", visitRoutes);
 
 
