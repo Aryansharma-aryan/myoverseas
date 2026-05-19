@@ -1,11 +1,12 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/db");
 
 const Auth = require("./routes/Auth");
 const consult = require("./routes/consultantRoutes");
-const analyticsRoutes = require("./routes/Analytics"); // ✅ Added
+const analyticsRoutes = require("./routes/Analytics");
 const visitRoutes = require("./routes/visitCounter");
 
 
@@ -39,7 +40,13 @@ connectDB();
 // ✅ Routes
 app.use("/api", Auth);
 app.use("/api", consult);
-app.use("/api", analyticsRoutes); // ✅ clean mount
+
+if (process.env.GA4_PROPERTY_ID && process.env.GA_CREDENTIALS_BASE64) {
+  app.use("/api", analyticsRoutes);
+} else {
+  console.warn("⚠️ Analytics route disabled: GA env vars are not configured.");
+}
+
 app.use("/api", visitRoutes);
 
 

@@ -2,9 +2,11 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-const ADMIN_EMAIL = "gsgb5555@gmail.com";
-const ADMIN_PASSWORD = "123456";
-const JWT_SECRET = "gurbazzsir1234"; // use process.env.JWT_SECRET in production
+const { ADMIN_EMAIL, ADMIN_PASSWORD, JWT_SECRET } = process.env;
+
+if (!ADMIN_EMAIL || !ADMIN_PASSWORD || !JWT_SECRET) {
+  throw new Error("Missing required environment variables for authentication: ADMIN_EMAIL, ADMIN_PASSWORD, JWT_SECRET");
+}
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;

@@ -29,14 +29,14 @@ const VisitCounter = () => {
 
     if (!lastVisit || now - parseInt(lastVisit) > 2 * 60 * 60 * 1000) {
       localStorage.setItem("lastVisitTime", now);
-      axios.get("https://myoverseas.onrender.com/api/public-visit")
+      axios.get("https://myoverseas-jqx6.onrender.com/api/public-visit")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);
         })
         .catch(err => console.error("Visit counter error:", err.message));
     } else {
-      axios.get("https://myoverseas.onrender.com/api/public-visit-count-only")
+      axios.get("https://myoverseas-jqx6.onrender.com/api/public-visit-count-only")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);

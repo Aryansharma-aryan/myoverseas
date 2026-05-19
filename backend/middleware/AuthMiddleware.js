@@ -1,10 +1,14 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "gurbazzsir1234";
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error("Missing required environment variable: JWT_SECRET");
+}
 
 const verifyAdmin = (req, res, next) => {
   const authHeader = req.headers.authorization;
-if (!authHeader) return res.status(401).json({ error: "No token provided" });
-const token = authHeader.split(" ")[1];
+  if (!authHeader) return res.status(401).json({ error: "No token provided" });
+  const token = authHeader.split(" ")[1];
 
   if (!token) return res.status(401).json({ error: "No token provided" });
 

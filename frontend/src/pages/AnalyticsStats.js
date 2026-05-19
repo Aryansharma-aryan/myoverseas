@@ -34,7 +34,7 @@ const AnalyticsStats = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("https://myoverseas.onrender.com/api/analytics");
+      const response = await axios.get("https://myoverseas-jqx6.onrender.com/api/analytics");
       setAnalytics(response.data);
     } catch (err) {
       console.error("Error fetching analytics:", err);
