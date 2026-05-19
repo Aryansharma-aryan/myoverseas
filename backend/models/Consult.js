@@ -7,6 +7,7 @@ const consultationSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     interest: { type: String, required: true },
     message: { type: String },
+    completed: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
