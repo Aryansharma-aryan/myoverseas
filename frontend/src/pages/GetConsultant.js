@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+import { API_BASE_URL } from "../api";
 
 export default function GetConsultant() {
   const [step, setStep] = useState(1);
@@ -25,7 +26,7 @@ export default function GetConsultant() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://myoverseas-jqx6.onrender.com/api/consultants", {
+      const response = await fetch(`${API_BASE_URL}/api/consultants`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

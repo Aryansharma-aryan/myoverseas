@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { api } from "../api";
 import { motion } from "framer-motion";
 
 const Contact = () => {
@@ -37,7 +37,7 @@ const Contact = () => {
     setSubmitted(false);
 
     try {
-      await axios.post("https://myoverseas-jqx6.onrender.com/api/consultants", formData);
+      await api.post("/api/consultants", formData);
       setSubmitted(true);
       setFormData({
         name: "",

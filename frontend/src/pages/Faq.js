@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { FaCheckCircle, FaMinus, FaPlus, FaTimesCircle } from "react-icons/fa";
+import { api } from "../api";
 
 const faqData = [
   {
     question: "How long does visa processing usually take?",
-    answer: "Typically 2–8 weeks depending on the destination and document completeness.",
+    answer: "Typically 2-8 weeks depending on the destination and document completeness.",
   },
   {
     question: "Do you help with SOP & LOR writing?",
@@ -20,40 +21,102 @@ const faqData = [
   },
 ];
 
+const initialFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
 const ConsultationSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [formData, setFormData] = useState(initialFormData);
+  const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState(null);
+
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const showToast = (type, message) => {
+    setToast({ type, message });
+    window.setTimeout(() => setToast(null), 3500);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
+
+    try {
+      await api.post("/api/consultants", {
+        ...formData,
+        interest: "FAQ Consultation",
+      });
+
+      setFormData(initialFormData);
+      showToast("success", "Request sent. Our team will contact you shortly.");
+    } catch (error) {
+      const message =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Could not submit your request. Please try again.";
+      showToast("error", message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-black via-[#0f172a] to-black text-white font-[Poppins] relative overflow-hidden">
-      {/* Section Heading */}
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 text-transparent bg-clip-text animate-pulse mb-4">
-          💬 Free Consultation & FAQ
+    <section className="relative overflow-hidden bg-gradient-to-br from-black via-[#0f172a] to-black px-6 py-24 font-[Poppins] text-white">
+      {toast && (
+        <div
+          className={`fixed right-4 top-5 z-[100] flex max-w-sm items-center gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-2xl backdrop-blur-md ${
+            toast.type === "success"
+              ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-100"
+              : "border-red-400/40 bg-red-500/15 text-red-100"
+          }`}
+        >
+          {toast.type === "success" ? (
+            <FaCheckCircle className="shrink-0 text-emerald-300" />
+          ) : (
+            <FaTimesCircle className="shrink-0 text-red-300" />
+          )}
+          <span>{toast.message}</span>
+        </div>
+      )}
+
+      <div className="mb-16 text-center">
+        <h2 className="mb-4 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-4xl font-extrabold text-transparent md:text-5xl">
+          Free Consultation & FAQ
         </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <p className="mx-auto max-w-2xl text-lg text-gray-300">
           Get answers to your queries and connect with our expert team for guidance.
         </p>
       </div>
 
-      {/* Two-column layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
-        {/* FAQ Accordion */}
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2">
         <div className="space-y-6">
           {faqData.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div
-                key={index}
+                key={faq.question}
                 className={`rounded-xl border border-white/10 bg-[#1a1a1a] transition-all duration-300 ${
                   isOpen ? "ring-2 ring-cyan-400/40 shadow-cyan-500/30" : ""
                 }`}
               >
                 <button
+                  type="button"
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex justify-between items-center px-6 py-5 text-left group hover:bg-white/5 transition duration-300"
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition duration-300 hover:bg-white/5"
                 >
                   <span
                     className={`text-lg font-semibold transition duration-300 ${
@@ -62,12 +125,12 @@ const ConsultationSection = () => {
                   >
                     {faq.question}
                   </span>
-                  <span className="text-cyan-400">
+                  <span className="shrink-0 text-cyan-400">
                     {isOpen ? <FaMinus /> : <FaPlus />}
                   </span>
                 </button>
                 <div
-                  className={`px-6 pb-5 text-gray-300 text-base transition-all duration-500 ease-in-out ${
+                  className={`px-6 pb-5 text-base text-gray-300 transition-all duration-500 ease-in-out ${
                     isOpen ? "block animate-fade-in" : "hidden"
                   }`}
                 >
@@ -78,37 +141,52 @@ const ConsultationSection = () => {
           })}
         </div>
 
-        {/* Contact Form */}
-        <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-cyan-400/10 hover:shadow-cyan-500/30 transition">
-          <h3 className="text-2xl font-bold text-cyan-400 mb-6 text-center">
+        <div className="rounded-2xl border border-cyan-400/10 bg-white/5 p-6 shadow-xl backdrop-blur-lg transition hover:shadow-cyan-500/30 sm:p-8">
+          <h3 className="mb-6 text-center text-2xl font-bold text-cyan-400">
             Request Free Consultation
           </h3>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"
+              name="name"
               placeholder="Full Name"
-              className="w-full text-white bg-black/30 px-4 py-3 rounded-xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md placeholder-white/70"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-600 bg-black/30 px-4 py-3 text-white shadow-md placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <input
               type="email"
+              name="email"
               placeholder="Email Address"
-              className="w-full text-white bg-black/30 px-4 py-3 rounded-xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md placeholder-white/70"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-600 bg-black/30 px-4 py-3 text-white shadow-md placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <input
               type="tel"
+              name="phone"
               placeholder="Phone Number"
-              className="w-full text-white bg-black/30 px-4 py-3 rounded-xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md placeholder-white/70"
+              required
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-600 bg-black/30 px-4 py-3 text-white shadow-md placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <textarea
               rows="4"
+              name="message"
               placeholder="Your Message"
-              className="w-full text-white bg-black/30 px-4 py-3 rounded-xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md resize-none placeholder-white/70"
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full resize-none rounded-xl border border-gray-600 bg-black/30 px-4 py-3 text-white shadow-md placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold hover:scale-105 transition duration-300 shadow-lg"
+              disabled={submitting}
+              className="w-full rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 py-3 font-semibold text-white shadow-lg transition duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Submit Request
+              {submitting ? "Submitting..." : "Submit Request"}
             </button>
           </form>
         </div>

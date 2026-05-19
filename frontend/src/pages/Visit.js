@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../api";
 import { motion } from "framer-motion";
 import { Bar, Doughnut } from "react-chartjs-2";
 import {
@@ -29,14 +29,14 @@ const VisitCounter = () => {
 
     if (!lastVisit || now - parseInt(lastVisit) > 2 * 60 * 60 * 1000) {
       localStorage.setItem("lastVisitTime", now);
-      axios.get("https://myoverseas-jqx6.onrender.com/api/public-visit")
+      api.get("/api/public-visit")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);
         })
         .catch(err => console.error("Visit counter error:", err.message));
     } else {
-      axios.get("https://myoverseas-jqx6.onrender.com/api/public-visit-count-only")
+      api.get("/api/public-visit-count-only")
         .then(res => {
           setData(res.data);
           animateCounter(0, res.data.visits);

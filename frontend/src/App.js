@@ -34,7 +34,12 @@ function AppWrapper() {
   const location = useLocation();
 
   useEffect(() => {
-    AOS.init({ duration: 800 });
+    AOS.init({
+      duration: 600,
+      once: true,
+      offset: 80,
+      disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    });
   }, []);
 
   return (
@@ -43,7 +48,7 @@ function AppWrapper() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.35 }}
       className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white min-h-screen font-[Poppins]"
     >
       <Suspense fallback={<Loader />}>
@@ -84,6 +89,8 @@ function AppWrapper() {
           <Route path="/admin/login" element={<Login />} />
         </Routes>
 
+      </Suspense>
+      <Suspense fallback={null}>
         <Footer />
       </Suspense>
     </motion.div>

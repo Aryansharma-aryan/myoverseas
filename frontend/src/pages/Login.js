@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { api } from "../api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ export default function Login() {
     setSuccessMsg("");
 
     try {
-      const res = await axios.post("https://myoverseas-jqx6.onrender.com/api/login", {
+      const res = await api.post("/api/login", {
         email,
         password,
       });

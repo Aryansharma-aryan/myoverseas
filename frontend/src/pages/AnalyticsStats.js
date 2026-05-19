@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../api";
 import CountUp from "react-countup";
 import {
   BarChart,
@@ -34,7 +34,7 @@ const AnalyticsStats = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("https://myoverseas-jqx6.onrender.com/api/analytics");
+      const response = await api.get("/api/analytics");
       setAnalytics(response.data);
     } catch (err) {
       console.error("Error fetching analytics:", err);
