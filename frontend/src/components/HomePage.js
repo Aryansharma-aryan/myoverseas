@@ -151,7 +151,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.8 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 1 }}
             className="absolute inset-0 z-0"
           >
             <div
@@ -166,7 +166,7 @@ export default function HomePage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative z-10 flex min-h-screen flex-col bg-[#0f2236]/35 backdrop-blur-[2px]">
+        <div className="relative z-10 flex min-h-screen flex-col bg-[#0f2236]/35 backdrop-blur-[3px]">
           <div className="flex flex-col gap-2 border-b border-white/10 bg-[#10263a]/95 px-4 py-2 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:text-base">
             <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
               <div className="flex flex-wrap items-center gap-1 text-sm sm:gap-2 sm:text-base">
@@ -367,22 +367,9 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative flex flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-6"
+            className="relative flex flex-1 flex-col items-center justify-center px-4 py-8 text-center"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-5 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#f5dfb1] shadow-[0_12px_28px_rgba(0,0,0,0.22)] backdrop-blur-md sm:text-sm"
-            >
-              <span>Kurukshetra</span>
-              <span className="h-1 w-1 rounded-full bg-[#f58220]" />
-              <span>Study Visa</span>
-              <span className="h-1 w-1 rounded-full bg-[#f58220]" />
-              <span>PR Guidance</span>
-            </motion.div>
-
-            <h2 className="mb-4 max-w-5xl text-center text-[clamp(1.45rem,4vw,2.75rem)] font-extrabold leading-tight drop-shadow-[2px_2px_5px_rgba(0,0,0,0.6)]">
+            <h2 className="mb-4 text-center text-[20px] font-extrabold leading-snug drop-shadow-[2px_2px_5px_rgba(0,0,0,0.6)] sm:text-[26px] md:text-[32px] lg:text-[38px] xl:text-[42px]">
               Achieve Your Dream to Study Abroad with
               <span className="ml-2 inline-block text-[#f58220] drop-shadow-[0_0_18px_rgba(245,130,32,0.35)]">
                 Vertex Study Visa
@@ -390,7 +377,7 @@ export default function HomePage() {
             </h2>
 
             <div className="mx-auto mb-8 w-full max-w-4xl">
-              <h1 className="bg-gradient-to-r from-[#f58220] via-[#ff8c2f] to-[#ffe6d1] bg-clip-text text-center text-[clamp(2.4rem,8vw,5rem)] font-extrabold leading-none text-transparent">
+              <h1 className="bg-gradient-to-r from-[#f58220] via-[#ff8c2f] to-[#ffe6d1] bg-clip-text text-center text-[40px] font-extrabold leading-tight tracking-tight text-transparent sm:text-[50px] md:text-[60px] lg:text-[70px] xl:text-[80px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={typewriterKey}
@@ -401,7 +388,7 @@ export default function HomePage() {
                       duration: 0.6,
                       ease: [0.25, 0.8, 0.25, 1],
                     }}
-                    className="inline-flex min-h-[3.2rem] items-center justify-center sm:min-h-[4.5rem] lg:min-h-[5.5rem]"
+                    className="inline-flex min-h-[3rem] items-center justify-center sm:min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] xl:min-h-[7rem]"
                   >
                     <Typewriter
                       words={typewriterWords}
@@ -410,7 +397,7 @@ export default function HomePage() {
                       cursorStyle="|"
                       typeSpeed={prefersReducedMotion ? 1000 : 50}
                       deleteSpeed={prefersReducedMotion ? 1000 : 40}
-                      delaySpeed={prefersReducedMotion ? 5000 : 1200}
+                      delaySpeed={prefersReducedMotion ? 5000 : 1000}
                       onLoopDone={() => setTypewriterKey((prev) => prev + 1)}
                     />
                   </motion.span>
@@ -418,7 +405,7 @@ export default function HomePage() {
               </h1>
             </div>
 
-            <p className="mb-8 max-w-2xl text-base font-bold leading-relaxed text-white drop-shadow-[2px_2px_3px_rgba(0,0,0,0.8)] sm:text-lg">
+            <p className="mb-10 max-w-2xl text-lg font-bold leading-relaxed text-white drop-shadow-[2px_2px_3px_rgba(0,0,0,0.8)]">
               We specialize in{" "}
               <span className="font-extrabold text-[#ff9b45]">Study Visas</span>,{" "}
               <span className="font-extrabold text-[#f58220]">Tourist Visas</span>,
@@ -429,20 +416,13 @@ export default function HomePage() {
               guidance.
             </p>
 
-            <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
-              <Link to="/consultant" className="w-full sm:w-auto">
-                <button className="group relative w-full overflow-hidden rounded-xl border border-[#ff9b45] px-8 py-4 text-base font-semibold text-white shadow-[0_10px_30px_rgba(245,130,32,0.35)] transition duration-300 hover:-translate-y-0.5 hover:scale-[1.02] sm:w-auto sm:text-lg">
-                  <span className="absolute inset-0 bg-gradient-to-r from-[#ef6c00] via-[#f58220] to-[#ff9b45] transition duration-300 group-hover:from-[#f58220] group-hover:via-[#ff8c2f] group-hover:to-[#ffb15e]" />
-                  <span className="absolute inset-[2px] rounded-[0.65rem] border border-white/20" />
-                  <span className="relative z-20">Get Free Consultation</span>
-                </button>
-              </Link>
-              <a href="tel:+919996140555" className="w-full sm:w-auto">
-                <button className="w-full rounded-xl border border-white/25 bg-white/10 px-8 py-4 text-base font-semibold text-white shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/15 sm:w-auto sm:text-lg">
-                  Call Now
-                </button>
-              </a>
-            </div>
+            <Link to="/consultant">
+              <button className="group relative overflow-hidden rounded-xl border border-[#ff9b45] px-8 py-4 text-lg font-semibold text-white shadow-[0_10px_30px_rgba(245,130,32,0.35)] transition duration-300 hover:scale-105">
+                <span className="absolute inset-0 bg-gradient-to-r from-[#ef6c00] via-[#f58220] to-[#ff9b45] transition duration-300 group-hover:from-[#f58220] group-hover:via-[#ff8c2f] group-hover:to-[#ffb15e]" />
+                <span className="absolute inset-[2px] rounded-[0.65rem] border border-white/20" />
+                <span className="relative z-20">GET FREE CONSULTATION</span>
+              </button>
+            </Link>
           </motion.section>
         </div>
       </div>
