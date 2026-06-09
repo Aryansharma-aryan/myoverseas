@@ -54,7 +54,20 @@ const Footer = () => {
             <li className="flex items-start gap-3">
               <FaEnvelope className="text-cyan-400 mt-1" />
               <span>
-                <strong>Mail:</strong> vertexstudyvisa@gmail.com
+                <strong>Mail:</strong>{" "}
+                <a
+                  href="mailto:vertexstudyvisa@gmail.com"
+                  className="transition duration-200 hover:text-cyan-400"
+                >
+                  vertexstudyvisa@gmail.com
+                </a>
+                {", "}
+                <a
+                  href="mailto:info@vertexstudyvisa.com"
+                  className="transition duration-200 hover:text-cyan-400"
+                >
+                  info@vertexstudyvisa.com
+                </a>
               </span>
             </li>
             <li className="flex items-start gap-3">

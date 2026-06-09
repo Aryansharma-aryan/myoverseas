@@ -77,6 +77,13 @@ const Layout = () => {
             >
               vertexstudyvisa@gmail.com
             </a>
+            <span className="mx-2 font-bold text-[#8aa0b8]">|</span>
+            <a
+              href="mailto:info@vertexstudyvisa.com"
+              className="font-bold text-white transition duration-200 hover:text-[#f5dfb1]"
+            >
+              info@vertexstudyvisa.com
+            </a>
           </span>
         </div>
 

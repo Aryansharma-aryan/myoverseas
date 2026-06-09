@@ -196,6 +196,15 @@ export default function HomePage() {
                 >
                   vertexstudyvisa@gmail.com
                 </a>
+                <span className="mx-1 hidden font-bold text-[#8aa0b8] sm:inline">
+                  |
+                </span>
+                <a
+                  href="mailto:info@vertexstudyvisa.com"
+                  className="break-all font-semibold text-white transition hover:text-[#f5dfb1] sm:break-normal"
+                >
+                  info@vertexstudyvisa.com
+                </a>
               </div>
             </div>
 
@@ -356,6 +365,13 @@ export default function HomePage() {
                       className="font-semibold text-[#f5dfb1]"
                     >
                       vertexstudyvisa@gmail.com
+                    </a>
+                    <span className="mx-1 text-[#8aa0b8]">|</span>
+                    <a
+                      href="mailto:info@vertexstudyvisa.com"
+                      className="font-semibold text-[#f5dfb1]"
+                    >
+                      info@vertexstudyvisa.com
                     </a>
                   </p>
                 </div>
