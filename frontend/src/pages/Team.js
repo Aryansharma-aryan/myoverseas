@@ -190,8 +190,7 @@ const members = [
 
   <div class="text-yellow-400 font-semibold text-sm">🎓 Education</div>
   <ul class="text-xs text-gray-300 space-y-1 list-disc list-inside">
-    <li><strong>Master of Arts in English</strong>, IGNOU – Indira Gandhi National Open University (2022) – 66%</li>
-    <li><strong>Bachelor of Science (Chemistry)</strong>, Himachal Pradesh University (HPU) (2017) – 72%</li>
+    <li><strong>Bachelor in Architecture</strong>, B•P•S Mahila Vishavidyalaya, Sonipat (2014) – 72%</li>
   </ul>
 
   <div class="text-blue-400 font-semibold text-sm">💻 Skills</div>
