@@ -359,10 +359,31 @@ const Team = () => {
           <p className="mt-3 text-sm leading-7 text-gray-300">
             Supporting the people behind every new beginning.
           </p>
-          <div className="mt-6 flex items-center gap-2 text-sm text-teal-300">
-            <FaUsers className="h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>People &amp; Culture</span>
+          <div className="mt-6 flex items-center gap-3 text-sm">
+            <FaGraduationCap className="h-5 w-5 shrink-0 text-teal-300" aria-hidden="true" />
+            <p className="text-gray-300">Education <span className="ml-2 font-semibold text-white">Graduate</span></p>
           </div>
+        </div>
+        <div className="border-t border-white/10 px-6 py-7 sm:col-span-2 sm:px-8">
+          <h4 className="flex items-center gap-3 text-lg font-semibold text-amber-200">
+            <FaUsers className="h-5 w-5 shrink-0" aria-hidden="true" />
+            HR Responsibilities
+          </h4>
+          <ul className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {[
+              ["Recruitment & Onboarding", "Coordinate hiring, interviews, and onboarding to help new employees settle into the team."],
+              ["Employee Support", "Address employee queries, support workplace communication, and help resolve day-to-day concerns."],
+              ["Attendance & Leave", "Maintain attendance and leave records, and coordinate staff availability with management."],
+              ["Employee Records", "Organize employee documentation and keep personnel information accurate and confidential."],
+              ["Daily Work Coordination", "Coordinate with departments, follow up on assigned work, and support smooth daily office operations."],
+              ["Policies & Team Development", "Communicate company policies, coordinate training, and encourage a respectful, collaborative workplace."],
+            ].map(([title, description]) => (
+              <li key={title} className="border-l-2 border-teal-300/40 pl-4">
+                <h5 className="text-sm font-semibold text-white">{title}</h5>
+                <p className="mt-1 text-sm leading-6 text-gray-300">{description}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </article>
 
