@@ -336,7 +336,7 @@ const Team = () => {
         <div className="relative bg-[#bec6c8]">
           <img
             src={hrPortrait}
-            alt="Human Resources team member at Vertex Study Overseas"
+            alt="Shaab Singh, Human Resources at Vertex Study Overseas"
             loading="lazy"
             decoding="async"
             width="1048"
@@ -350,9 +350,10 @@ const Team = () => {
             <span className="text-sm font-semibold">Meet our HR</span>
           </div>
           <h3 id="hr-profile-title" className="text-3xl font-bold leading-tight text-white">
-            Human Resources
+            Shaab Singh
           </h3>
-          <p className="mt-2 text-sm font-medium text-amber-200">Vertex Study Overseas</p>
+          <p className="mt-2 text-sm font-medium text-amber-200">Human Resources</p>
+          <p className="mt-1 text-sm text-gray-300">Vertex Study Overseas</p>
           <div className="my-6 h-px w-12 bg-amber-300/60" />
           <p className="text-lg font-medium leading-relaxed text-white">People at the heart of our team.</p>
           <p className="mt-3 text-sm leading-7 text-gray-300">
