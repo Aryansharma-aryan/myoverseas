@@ -5,6 +5,7 @@ import ukConsult from "../assets/jagdeepuk.jpeg";
 import team2 from "../assets/vasundha.jpeg";
 import team3 from "../assets/supreet.jpeg";
 import Australia from "../assets/anchal.jpg";
+import hrPortrait from "../assets/HR.jpeg";
 
 import jashanpreet from "../assets/jashanpreet.jpg"
 
@@ -328,6 +329,42 @@ const Team = () => {
       </motion.div>
 
       {/* Team Cards Grid */}
+      <article
+        aria-labelledby="hr-profile-title"
+        className="relative z-10 mx-auto mb-14 grid w-full max-w-3xl overflow-hidden rounded-lg border border-amber-300/30 bg-[#17191d] shadow-2xl transition-shadow duration-300 hover:shadow-[0_16px_50px_rgba(251,191,36,0.12)] sm:grid-cols-[240px_minmax(0,1fr)]"
+      >
+        <div className="relative bg-[#bec6c8]">
+          <img
+            src={hrPortrait}
+            alt="Human Resources team member at Vertex Study Overseas"
+            loading="lazy"
+            decoding="async"
+            width="1048"
+            height="1570"
+            className="mx-auto block h-auto w-full max-w-[280px] sm:max-w-none"
+          />
+        </div>
+        <div className="flex min-w-0 flex-col justify-center border-t-2 border-amber-300 px-6 py-8 sm:border-l-2 sm:border-t-0 sm:px-8">
+          <div className="mb-5 flex items-center gap-3 text-amber-300">
+            <FaUserTie className="h-5 w-5 shrink-0" aria-hidden="true" />
+            <span className="text-sm font-semibold">Meet our HR</span>
+          </div>
+          <h3 id="hr-profile-title" className="text-3xl font-bold leading-tight text-white">
+            Human Resources
+          </h3>
+          <p className="mt-2 text-sm font-medium text-amber-200">Vertex Study Overseas</p>
+          <div className="my-6 h-px w-12 bg-amber-300/60" />
+          <p className="text-lg font-medium leading-relaxed text-white">People at the heart of our team.</p>
+          <p className="mt-3 text-sm leading-7 text-gray-300">
+            Supporting the people behind every new beginning.
+          </p>
+          <div className="mt-6 flex items-center gap-2 text-sm text-teal-300">
+            <FaUsers className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>People &amp; Culture</span>
+          </div>
+        </div>
+      </article>
+
       <motion.div
         initial="hidden"
         whileInView="visible"
