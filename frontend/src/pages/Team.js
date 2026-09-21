@@ -355,7 +355,6 @@ const Team = () => {
           <p className="mt-2 text-sm font-medium text-amber-200">Human Resources</p>
           <p className="mt-1 text-sm text-gray-300">Vertex Study Overseas</p>
           <div className="my-6 h-px w-12 bg-amber-300/60" />
-          <p className="text-lg font-medium leading-relaxed text-white">People at the heart of our team.</p>
           <p className="mt-3 text-sm leading-7 text-gray-300">
             Supporting the people behind every new beginning.
           </p>
