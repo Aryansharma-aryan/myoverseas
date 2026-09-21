@@ -50,7 +50,7 @@ export default function WhyChooseVertex() {
             custom={1}
           >
             Why Choose{" "}
-            <span className="text-orange-400">Vertex Study Overseas?</span>
+            <span className="text-orange-400">Vertex Study Visa?</span>
           </motion.h2>
 
           <motion.p
@@ -58,7 +58,7 @@ export default function WhyChooseVertex() {
             variants={fadeInUp}
             custom={2}
           >
-            At Vertex Study Overseas, we turn dreams into reality by providing expert guidance and reliable visa consultation services. With years of experience, thousands of successful applications, and a personalized approach, we ensure a smooth and confident journey to your study abroad goals.
+            At Vertex Study Visa, we turn dreams into reality by providing expert guidance and reliable visa consultation services. With years of experience, thousands of successful applications, and a personalized approach, we ensure a smooth and confident journey to your study abroad goals.
           </motion.p>
 
           <motion.ul className="space-y-4 text-lg text-gray-100">
@@ -100,7 +100,7 @@ export default function WhyChooseVertex() {
           <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent z-10" />
           <img
             src={whyImage}
-            alt="Why Vertex Study Overseas"
+            alt="Why Vertex Study Visa"
             className="w-full h-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
           />
           <div className="absolute -inset-1 rounded-2xl border border-yellow-400/20 blur-md opacity-30 group-hover:opacity-60 transition duration-700" />

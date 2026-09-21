@@ -27,7 +27,7 @@ const FounderSection = () => {
           </h2>
           <p className="text-sm text-amber-400 font-medium mb-6 flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
-            Founder & Visionary Leader, Vertex Study Overseas
+            Founder & Visionary Leader, Vertex Study Visa
           </p>
           
           <div className="space-y-4 mb-6">
